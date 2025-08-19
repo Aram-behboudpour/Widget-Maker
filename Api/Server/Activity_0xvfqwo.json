@@ -1,0 +1,71 @@
+{
+  "processName": "DeactivateHamoon",
+  "processLabel": "DeactivateHamoon",
+  "formName": "نتیجه",
+  "formLabel": "نتیجه",
+  "componentsList": [
+    {
+      "type": "space",
+      "componentId": "b70caa20-f7a2-451f-8296-33c8d62ea28c",
+      "parentComponentId": null
+    },
+    {
+      "type": "space",
+      "componentId": "47fbcd1c-2bc3-4987-a4f0-cf4089f26151",
+      "parentComponentId": null
+    },
+    {
+      "type": "space",
+      "componentId": "3b3be512-2aec-4db0-ae9e-1f7208822bee",
+      "parentComponentId": null
+    },
+    {
+      "type": "space",
+      "componentId": "368cc033-47d5-487c-b1fd-38a418642c9b",
+      "parentComponentId": null
+    },
+    {
+      "type": "space",
+      "componentId": "f192829d-b5c9-45b2-bf54-731ed9a620bb",
+      "parentComponentId": null
+    },
+    {
+      "type": "space",
+      "componentId": "b7dd1c54-1c28-4d92-b988-dba196a0c1dd",
+      "parentComponentId": null
+    },
+    {
+      "type": "space",
+      "componentId": "3a06ff60-e16d-43c7-bf80-0e1fc6a4d5d0",
+      "parentComponentId": null
+    },
+    {
+      "type": "space",
+      "componentId": "f6e54540-5a0c-4d00-88d9-696ca96a2e7c",
+      "parentComponentId": null
+    },
+    {
+      "type": "space",
+      "componentId": "7cdd01bf-72d2-4fb6-be28-6d01684637f4",
+      "parentComponentId": null
+    },
+    {
+      "type": "space",
+      "componentId": "0484fd73-f02e-4b6d-bc8d-3965b56be1c5",
+      "parentComponentId": null
+    },
+    {
+      "type": "space",
+      "componentId": "48744e84-2004-40dc-b205-ce2571c6ace7",
+      "parentComponentId": null
+    },
+    {
+      "type": "button",
+      "componentId": "7f105e6f-80f4-43c2-8940-126962244e29",
+      "parentComponentId": null,
+      "buttonProperties": {
+        "type": "submit"
+      }
+    }
+  ]
+}

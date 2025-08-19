@@ -1,0 +1,17 @@
+﻿@page
+
+@model Pages.Errors.ErrorModel
+
+@{
+
+	var pageTitle = "خطای ناشناخته";
+	// $"{oc.TSB.Resources.DataDictionary.UnexpectedError} ;
+
+	ViewData[oc.TSB.Core.Constants.ViewDataKeyName.PageTitle] = pageTitle;
+}
+
+<h3 class="text-center mt-3">
+	@(pageTitle)
+</h3>
+
+<hr />

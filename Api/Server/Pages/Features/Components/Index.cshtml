@@ -1,0 +1,106 @@
+﻿@page
+@using Server.Infrastructure
+@using oc.TSB.Infrastructure.Features.Components.ViewModels
+@model Server.Pages.Features.Components.IndexModel
+@{
+	var pageTitle =
+				$"{oc.TSB.Resources.DataDictionary.ListOf} {oc.TSB.Resources.DataDictionary.Components}";
+
+	ViewData["PageTitle"] = pageTitle;
+
+	var list = Model.DisplayViewModel?.List ?? new List<ComponentResultViewModel>();
+	var itemCount = Model.DisplayViewModel?.RecordCount ?? 0;
+}
+<br />
+
+
+<section-page-actions class="mb-3">
+	<a asp-page="Create" class="btn btn-primary btn-sm d-inline-flex align-items-center gap-1">
+		<i class="bi bi-plus-circle"></i>
+		@(Html.DtatGetLinkCaptionForCreate())
+	</a>
+</section-page-actions>
+
+<partial name="PartialViews/_DisplayPageMessages" />
+
+<section-table>
+	<table class="table table-striped table-bordered table-hover">
+		<caption>
+			@(pageTitle)
+		</caption>
+
+		<thead>
+			<tr>
+				<th>
+					@(oc.TSB.Resources.DataDictionary.RowNumber)
+				</th>
+				<th>
+					عملیات مدیریتی
+				</th>
+				<th>
+					@(oc.TSB.Resources.DataDictionary.IsActive)
+				</th>
+				<th>
+					@(oc.TSB.Resources.DataDictionary.Title)
+				</th>
+
+				<th>
+					@(oc.TSB.Resources.DataDictionary.Name)
+				</th>
+
+				<th>
+					@(oc.TSB.Resources.DataDictionary.ParentComponentName)
+				</th>
+				<th>
+					@(oc.TSB.Resources.DataDictionary.UserTaskName)
+				</th>
+				<th>
+					@(oc.TSB.Resources.DataDictionary.Ordering)
+				</th>
+				<th>
+					@(oc.TSB.Resources.DataDictionary.InsertDateTime)
+				</th>
+				<th>
+					@(oc.TSB.Resources.DataDictionary.UpdateDateTime)
+				</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			@for (var index = 0; index <= itemCount - 1; index++)
+			{
+				var item = list[index];
+
+				<tr>
+					@(Html.DtatDisplayRowNumberWithTd(value: index + 1))
+
+					<td>
+						<a asp-page="Details" asp-route-id="@(item.Id)">🔍</a>
+						<a asp-page="Update" asp-route-id="@(item.Id)">✏️</a>
+						<a asp-page="Delete" asp-route-id="@(item.Id)">🗑️</a>
+					</td>
+
+					@(Html.DtatDisplayBooleanWithTd(value: item.IsActive))
+
+					@(Html.DtatDisplayStringWithTd(value: item.Title))
+
+					@(Html.DtatDisplayStringWithTd(value: item.Name))
+
+					<td>@(item.ParentComponentId != null ? item.ParentComponentName : "والد ندارد")</td>
+
+					@(Html.DtatDisplayStringWithTd(value: item.UserTaskName))
+
+					@(Html.DtatDisplayIntegerWithTd(value: item.Ordering))
+
+					@(Html.DtatDisplayDateTimeOffsetWithTd(value: item.InsertDateTime))
+
+					@(Html.DtatDisplayDateTimeOffsetWithTd(value: item.UpdateDateTime))
+				</tr>
+			}
+		</tbody>
+	</table>
+</section-table>
+
+
+
+

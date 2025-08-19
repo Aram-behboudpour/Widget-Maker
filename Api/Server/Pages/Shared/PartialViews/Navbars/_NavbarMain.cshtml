@@ -1,0 +1,47 @@
+﻿<div class="container">
+	<header>
+		<nav class="navbar navbar-expand-md border-bottom pt-0 pb-0">
+
+			<div class="container">
+				<a class="navbar-brand" asp-area="" asp-page="Index">
+					ویجت ساز کموندا
+				</a>
+
+				<button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="collapse navbar-collapse" id="navbarMain">
+
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item">
+							<a class="nav-link" asp-page="/Index">
+								خانه
+							</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link" asp-page="/About">
+								درباره ما
+							</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link" asp-page="/Contact">
+								تماس با ما
+							</a>
+						</li>
+
+						<partial name="/Pages/Features/PartialViews/Navbars/_Navbar.cshtml" />
+					</ul>
+
+					@* <partial name="PartialViews/Navbars/_NavbarCulture" /> *@
+
+				</div>				
+
+			</div>
+
+		</nav>
+
+	</header>
+</div>

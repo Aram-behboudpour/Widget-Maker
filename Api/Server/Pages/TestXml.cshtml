@@ -1,0 +1,14 @@
+﻿@page
+@model Server.Pages.TestXmlModel
+@{
+}
+
+<h2>XML Parse Result</h2>
+
+<partial name="PartialViews/_DisplayPageMessages" />
+
+<partial name="PartialViews/_DisplayToastMessages" />
+
+<pre>
+@Model.JsonOutput
+</pre>

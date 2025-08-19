@@ -1,0 +1,54 @@
+﻿@page
+@model Server.Pages.Features.Processes.UpdateModel;
+@{
+	var pageTitle =
+		$"{oc.TSB.Resources.DataDictionary.UpdateOf} {oc.TSB.Resources.DataDictionary.Process}";
+
+	ViewData[oc.TSB.Core.Constants.ViewDataKeyName.PageTitle] = pageTitle;
+}
+
+<form method="post">
+
+	<input type="hidden" asp-for="ViewModel.Id" />
+
+	<section-form>
+		<fieldset>
+			<section-form-header>
+				@(pageTitle)
+			</section-form-header>
+
+			<partial name="PartialViews/_DisplayPageMessages" />
+
+			<partial name="PartialViews/_DisplayToastMessages" />
+
+			<faraz-full-checkbox asp-for="ViewModel.IsActive" />
+
+			<faraz-full-input asp-for="ViewModel.Title" />
+
+			<faraz-full-input asp-for="ViewModel.Name" />
+
+			<faraz-full-input asp-for="ViewModel.Version" />
+
+			<faraz-full-input asp-for="ViewModel.Ordering" />
+
+		</fieldset>
+
+		<section-form-buttons>
+			<button-save />
+			<button-reset />
+		</section-form-buttons>
+
+		<section-form-footer>
+			<a asp-page="Index">
+				@(Html.DtatGetLinkCaptionForList())
+			</a>
+			<a asp-page="Details" asp-route-id="@(Model.ViewModel.Id)">
+				@(Html.DtatGetLinkCaptionForDetails())
+			</a>
+			<a asp-page="Delete" asp-route-id="@(Model.ViewModel.Id)">
+				@(Html.DtatGetLinkCaptionForDelete())
+			</a>
+		</section-form-footer>
+	</section-form>
+
+</form>

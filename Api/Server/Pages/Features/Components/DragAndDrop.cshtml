@@ -1,0 +1,276 @@
+﻿@page
+@using oc.TSB.Core.Features.CamundaProcesses
+@model Server.Pages.Features.Components.DragAndDropModel
+@{
+}
+
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+	<meta charset="utf-8" />
+	<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+	@section StyleSheets
+	{
+		<style>
+			.component-card {
+				border: 1px solid #ccc;
+				border-radius: 8px;
+				margin: 5px;
+				padding: 10px;
+				background-color: #f9f9f9;
+				cursor: grab;
+			}
+
+				.component-card.selected {
+					border: 2px solid #007bff;
+					background-color: #e9f5ff;
+				}
+
+			.children-list {
+				margin-top: 10px;
+				margin-right: 15px;
+				padding-right: 10px;
+				border-right: 1px dashed #ccc;
+			}
+		</style>
+	}
+
+</head>
+
+@* <dtat-full-select asp-for=ViewModel.ProcessId asp-items="@(Model.ProcessesSelectList)" /> *@
+
+<body>
+	<form method="post" enctype="multipart/form-data">
+		@Html.AntiForgeryToken()
+
+		<div style="display: flex; gap: 1rem;">
+			<div style="width: 25%; padding: 1rem; overflow-y: auto;">
+				<label asp-for="ViewModel.ProcessId" style="display: block; margin-bottom: 0.5rem;">
+					@(oc.TSB.Resources.DataDictionary.Process)
+				</label>
+				<select asp-for="ViewModel.ProcessId" asp-items="Model.ProcessesSelectList" class="form-control" style="width: 100%;"></select>
+			</div>
+
+			<div style="width: 25%; padding: 1rem; overflow-y: auto;">
+				<label asp-for="ViewModel.UserTaskId" style="display: block; margin-bottom: 0.5rem;">
+					@(oc.TSB.Resources.DataDictionary.UserTask)
+				</label>
+				<select asp-for="ViewModel.ProcessId" asp-items="Model.UserTasksSelectList" class="form-control" style="width: 100%;"></select>
+			</div>
+
+			<div style="display: flex; align-items: center; justify-content: center; width: 25%; padding: 1rem;">
+				<button asp-page-handler="ComponentLoading" type="submit" class="btn btn-success btn-sm" style="height: 40px; min-width: 100px;">
+					لودینگ کامپوننت
+				</button>
+			</div>
+		</div>
+
+		<div style="display: flex; gap: 1rem; height: 90vh;">
+
+			<!-- ستون راست: لیست کامپوننت‌ها -->
+			<div style="width: 25%; border-left: 1px solid #ccc; padding: 1rem; overflow-y: auto;">
+				<h4>کامپوننت‌ها</h4>
+				<div id="componentList">
+					@foreach (var comp in Model.AllComponents)
+					{
+						<div class="component-card" data-id="@comp.Id" data-name="@comp.Name">
+							<div class="card-header">@comp.Name</div>
+						</div>
+					}
+				</div>
+			</div>
+
+			<!-- ستون وسط: ناحیه چیدمان -->
+			<div style="width: 50%; border: 2px dashed #aaa; padding: 1rem; overflow-y: auto;">
+				<h4>چیدمان</h4>
+				<div id="dropZone" class="component-tree">
+
+					@if (Model.Newcomponents != null && Model.Newcomponents.Count > 0)
+					{
+						@foreach (var comp in Model.Newcomponents)
+						{
+							if (comp.Type == "space")
+							{
+								<div class="component-card" data-id="@comp.ComponentId" data-name="@comp.Type">
+									<div class="card-header">@comp.Type</div>
+								</div>
+							}
+							else if (comp.Type == "textInput")
+							{
+								@* <div>
+								ورودی متن: @comp.TextInputProperties.Label
+							</div> *@
+								<div class="component-card" data-id="@comp.ComponentId" data-name="@comp.Type">
+									<div class="card-header">@comp.Type</div>
+								</div>
+
+							}
+							else if (comp.Type == "checkBox")
+							{
+								@* <div>
+								چک‌باکس: @comp.CheckBoxProperties.Label
+								( @(comp.CheckBoxProperties.Value ? "فعال" : "غیرفعال") )
+							</div> *@
+								<div class="component-card" data-id="@comp.ComponentId" data-name="@comp.Type">
+									<div class="card-header">@comp.Type</div>
+								</div>
+							}
+							else if (comp.Type == "button")
+							{
+								@* <div>
+									<button type="@comp.ButtonProperties.Type">
+										@(comp.ButtonProperties.Type == "submit" ? "ارسال" : "دکمه")
+									</button>
+								</div> *@
+								<div class="component-card" data-id="@comp.ComponentId" data-name="@comp.Type">
+									<div class="card-header">@comp.Type</div>
+								</div>
+							}
+						}
+					}
+
+				</div>
+				<button id="saveBtn" type="button" class="btn btn-primary mt-3">ذخیره چیدمان</button>
+			</div>
+
+			<!-- ستون چپ: ویژگی‌ها -->
+			<div style="width: 25%; border-right: 1px solid #ccc; padding: 1rem;">
+				<h4>جزئیات</h4>
+				<div id="detailsBox">لطفاً یک کامپوننت را انتخاب کنید</div>
+			</div>
+		</div>
+	</form>
+
+
+	@section Scripts
+	{
+		<script>
+			// دراگ از لیست سمت راست
+			new Sortable(document.getElementById('componentList'), {
+				group: {
+					name: 'components',
+					pull: 'clone',
+					put: false
+				},
+				sort: false,
+				animation: 150
+			});
+
+			// ناحیه اصلی (ستون وسط)
+			enableNesting(document.getElementById('dropZone'));
+
+			function enableNesting(el) {
+				new Sortable(el, {
+					group: 'components',
+					animation: 150,
+					fallbackOnBody: true,
+					swapThreshold: 0.65,
+					onAdd: function (evt) {
+						const oldEl = evt.item;
+						const id = oldEl.dataset.id;
+						const name = oldEl.dataset.name;
+
+						const newCard = document.createElement('div');
+						newCard.className = 'component-card';
+						newCard.dataset.id = id;
+						newCard.dataset.name = name;
+							  newCard.innerHTML = `
+							<div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+								<span>${name}</span>
+								<button class="delete-btn" style="background: none; border: none; color: red; cursor: pointer;">❌</button>
+							</div>
+							<div class="children-list"></div>
+						`;
+
+						newCard.addEventListener('click', () => showDetails(id, newCard));
+
+									newCard.querySelector('.delete-btn').addEventListener('click', (e) => {
+									e.stopPropagation();
+
+									// اگر جزئیات این کارت در ستون چپ نمایش داده شده، آن را پاک کن
+									if (newCard.classList.contains('selected')) {
+										document.getElementById('detailsBox').innerHTML = 'لطفاً یک کامپوننت را انتخاب کنید';
+									}
+
+									const id = newCard.dataset.id;
+
+									// حذف از UI
+									newCard.remove();
+
+									// ارسال درخواست به سرور برای حذف رابطه پدر
+									fetch('/Features/Components/DragAndDrop?handler=Unlink', {
+										method: 'POST',
+										headers: {
+											'Content-Type': 'application/json',
+											'RequestVerificationToken': document.querySelector('[name="__RequestVerificationToken"]').value
+										},
+										body: JSON.stringify(id)
+									}).then(res => {
+										if (!res.ok) {
+											alert('❌ خطا در ارتباط با سرور هنگام حذف رابطه');
+										}
+									});
+								});
+
+						const childContainer = newCard.querySelector('.children-list');
+						enableNesting(childContainer);
+
+						oldEl.replaceWith(newCard);
+					}
+				});
+			}
+
+			function showDetails(id, el) {
+				document.querySelectorAll('.component-card').forEach(e => e.classList.remove('selected'));
+				el.classList.add('selected');
+
+				fetch(`/Features/Components/DragAndDrop?handler=Details&id=${id}`)
+					.then(res => res.text())
+					.then(html => {
+						document.getElementById('detailsBox').innerHTML = html;
+					});
+			}
+
+			function extractTree(parentEl, parentId = null) {
+				const result = [];
+				for (let i = 0; i < parentEl.children.length; i++) {
+					const card = parentEl.children[i];
+					const id = card.dataset.id;
+					result.push({ Id: id, ParentId: parentId, Order: i });
+
+					const childContainer = card.querySelector('.children-list');
+					if (childContainer) {
+						result.push(...extractTree(childContainer, id));
+					}
+				}
+				return result;
+			}
+
+			document.getElementById('saveBtn').addEventListener('click', () => {
+				const tree = extractTree(document.getElementById('dropZone'));
+
+				console.log('Tree:', tree);
+
+				fetch('/Features/Components/DragAndDrop?handler=SaveTree', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'RequestVerificationToken': document.querySelector('[name="__RequestVerificationToken"]').value
+					},
+					body: JSON.stringify(tree)
+				}).then(res => {
+					if (res.ok) alert('✅ ذخیره شد');
+					else alert('❌ خطا در ذخیره');
+				});
+			});
+		</script>
+	}
+</body>
+</html>
+
+
+
+
+
+

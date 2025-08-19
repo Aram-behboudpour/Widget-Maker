@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<Nullable>enable</Nullable>
+		<TargetFramework>net8.0</TargetFramework>
+		<!--<ImplicitUsings>enable</ImplicitUsings>-->
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Remove="CommandHandlers\**" />
+		<Compile Remove="Commands\**" />
+		<Compile Remove="Dtos\**" />
+		<EmbeddedResource Remove="CommandHandlers\**" />
+		<EmbeddedResource Remove="Commands\**" />
+		<EmbeddedResource Remove="Dtos\**" />
+		<None Remove="CommandHandlers\**" />
+		<None Remove="Commands\**" />
+		<None Remove="Dtos\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Core\oc.TSB.Core.csproj" />
+		<ProjectReference Include="..\Framework\Faraz\Faraz.csproj" />
+		<ProjectReference Include="..\Infrastructure\oc.TSB.Infrastructure.csproj" />
+		<ProjectReference Include="..\Resources\oc.TSB.Resources.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="12.0.1" />
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+		<PackageReference Include="FluentResults" Version="3.15.0" />
+		<PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+		<PackageReference Include="Liphsoft.Crypto.Argon2" Version="1.0.5" />
+		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Features\Logs\CommandHandlers\" />
+		<Folder Include="Features\Logs\QueryHandlers\" />
+		<Folder Include="Features\Logs\Queries\" />
+	</ItemGroup>
+
+</Project>

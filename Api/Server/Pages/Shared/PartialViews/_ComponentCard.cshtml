@@ -1,0 +1,15 @@
+﻿
+@model oc.TSB.Core.Features.CamundaProcesses.Component
+
+<div class="component-card" data-id="@Model.Id">
+    <div class="card-header">@Model.Name</div>
+    <div class="children-list">
+        @if (Model.Children != null && Model.Children.Any())
+        {
+            foreach (var child in Model.Children)
+            {
+                @await Html.PartialAsync("_ComponentCard", child)
+            }
+        }
+    </div>
+</div>

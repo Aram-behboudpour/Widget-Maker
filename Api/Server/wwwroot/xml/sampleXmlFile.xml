@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_13vyh2r" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.13.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.19.0">
+	<bpmn:collaboration id="Collaboration_1savrn9">
+		<bpmn:participant id="Participant_07zp3a7" name="DeactivateHamoon" processRef="Process_11q114h" />
+		<bpmn:participant id="Participant_1ea8ede" name="پرتال" />
+		<bpmn:messageFlow id="Flow_09iivvb" sourceRef="Participant_1ea8ede" targetRef="StartEvent_1" />
+	</bpmn:collaboration>
+	<bpmn:process id="Process_11q114h" name="DeactivateHamoon" isExecutable="true" camunda:historyTimeToLive="3">
+		<bpmn:startEvent id="StartEvent_1" name="StrartDeactivateHamoon">
+			<bpmn:extensionElements>
+				<camunda:formData>
+					<camunda:formField id="businessKey" label="businessKey" type="string" />
+					<camunda:formField id="resultEnabled" label="resultEnabled" type="string" />
+					<camunda:formField id="variablesInResultEnabled" label="variablesInResultEnabled" type="string" />
+					<camunda:formField id="customerNumber" label="customerNumber" type="string" />
+				</camunda:formData>
+			</bpmn:extensionElements>
+			<bpmn:outgoing>Flow_18p3n6j</bpmn:outgoing>
+			<bpmn:messageEventDefinition id="MessageEventDefinition_0ukkerz" messageRef="Message_1lkuckj" />
+		</bpmn:startEvent>
+		<bpmn:subProcess id="Activity_19ytdbw" triggeredByEvent="true">
+			<bpmn:startEvent id="Event_0bjaqm0" name="">
+				<bpmn:outgoing>Flow_0i8sr7p</bpmn:outgoing>
+				<bpmn:timerEventDefinition id="TimerEventDefinition_1sxbiwi">
+					<bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT1H30M</bpmn:timeDuration>
+				</bpmn:timerEventDefinition>
+			</bpmn:startEvent>
+			<bpmn:endEvent id="Event_12bakhj">
+				<bpmn:incoming>Flow_0i8sr7p</bpmn:incoming>
+			</bpmn:endEvent>
+			<bpmn:sequenceFlow id="Flow_0i8sr7p" sourceRef="Event_0bjaqm0" targetRef="Event_12bakhj" />
+		</bpmn:subProcess>
+		<bpmn:sequenceFlow id="Flow_18p3n6j" sourceRef="StartEvent_1" targetRef="Activity_0e5y75o" />
+		<bpmn:serviceTask id="Activity_0e5y75o" name="دریافت اطلاعات مشتری" camunda:type="external" camunda:topic="anotherTaskTopic">
+			<bpmn:extensionElements>
+				<camunda:inputOutput>
+					<camunda:inputParameter name="customerNumber">${customerNumber}</camunda:inputParameter>
+				</camunda:inputOutput>
+			</bpmn:extensionElements>
+			<bpmn:incoming>Flow_18p3n6j</bpmn:incoming>
+			<bpmn:outgoing>Flow_0s292ku</bpmn:outgoing>
+		</bpmn:serviceTask>
+		<bpmn:boundaryEvent id="Event_15w0euu" attachedToRef="Activity_0e5y75o">
+			<bpmn:outgoing>Flow_1qi7zb9</bpmn:outgoing>
+			<bpmn:errorEventDefinition id="ErrorEventDefinition_03r3khq" errorRef="Error_0mvk0dl" />
+		</bpmn:boundaryEvent>
+		<bpmn:sequenceFlow id="Flow_1qi7zb9" sourceRef="Event_15w0euu" targetRef="Activity_03ffu17" />
+		<bpmn:sequenceFlow id="Flow_0s292ku" sourceRef="Activity_0e5y75o" targetRef="Activity_0c3kv56" />
+		<bpmn:sequenceFlow id="Flow_0gmu4w9" sourceRef="Event_0av68yw" targetRef="Activity_03ffu17" />
+		<bpmn:sequenceFlow id="Flow_0wmjau6" sourceRef="Activity_03ffu17" targetRef="Event_1b5jnlq" />
+		<bpmn:subProcess id="Activity_0absh82" name="" triggeredByEvent="true">
+			<bpmn:endEvent id="Event_1oiplsj">
+				<bpmn:incoming>Flow_0mwkjru</bpmn:incoming>
+			</bpmn:endEvent>
+			<bpmn:startEvent id="Event_11ylb1r" isInterrupting="false">
+				<bpmn:outgoing>Flow_0mwkjru</bpmn:outgoing>
+				<bpmn:signalEventDefinition id="SignalEventDefinition_0jemnwb" signalRef="Signal_1v2kd07" />
+			</bpmn:startEvent>
+			<bpmn:sequenceFlow id="Flow_0mwkjru" sourceRef="Event_11ylb1r" targetRef="Event_1oiplsj" />
+		</bpmn:subProcess>
+		<bpmn:sequenceFlow id="Flow_1p1uly2" sourceRef="Activity_0c3kv56" targetRef="Activity_0xvfqwo" />
+		<bpmn:userTask id="Activity_0xvfqwo" name="نتیجه">
+			<bpmn:extensionElements>
+				<camunda:formData>
+					<camunda:formField id="SelectedChequeBook" label="شماره دسته چک" type="string" />
+					<camunda:formField id="ChequeList" label="لیست چک ها" type="string" />
+					<camunda:formField id="Balance" label="موجودی" type="string" />
+					<camunda:formField id="balanceSpecified" label="موجودی" type="string" />
+					<camunda:formField id="SeriesNumber" label="سری چک" type="string" />
+					<camunda:formField id="Description" label="توضیحات" type="string" />
+					<camunda:formField id="ChequeSerial" label="سریال چک" type="string" />
+					<camunda:formField id="StatusField" label="وضعیت چک" type="string" />
+					<camunda:formField id="ChangeStatusDate" label="تاریخ آخرین وضعیت" type="string" />
+					<camunda:formField id="Number" label="تعداد برگ چک" type="string" />
+					<camunda:formField id="Select" label="انتخاب" type="string" />
+				</camunda:formData>
+			</bpmn:extensionElements>
+			<bpmn:incoming>Flow_1p1uly2</bpmn:incoming>
+			<bpmn:outgoing>Flow_1pu741w</bpmn:outgoing>
+		</bpmn:userTask>
+		<bpmn:sequenceFlow id="Flow_1pu741w" sourceRef="Activity_0xvfqwo" targetRef="Event_1b5jnlq" />
+		<bpmn:endEvent id="Event_1b5jnlq">
+			<bpmn:incoming>Flow_0wmjau6</bpmn:incoming>
+			<bpmn:incoming>Flow_1pu741w</bpmn:incoming>
+		</bpmn:endEvent>
+		<bpmn:serviceTask id="Activity_0c3kv56" name="غیر فعالسلزی هامون" camunda:type="external" camunda:topic="disableHamoonWorkerVer2">
+			<bpmn:extensionElements />
+			<bpmn:incoming>Flow_0s292ku</bpmn:incoming>
+			<bpmn:outgoing>Flow_1p1uly2</bpmn:outgoing>
+		</bpmn:serviceTask>
+		<bpmn:boundaryEvent id="Event_0av68yw" attachedToRef="Activity_0c3kv56">
+			<bpmn:outgoing>Flow_0gmu4w9</bpmn:outgoing>
+			<bpmn:errorEventDefinition id="ErrorEventDefinition_1vdlshx" errorRef="Error_0mvk0dl" />
+		</bpmn:boundaryEvent>
+		<bpmn:userTask id="Activity_03ffu17" name="خطا">
+			<bpmn:extensionElements>
+				<camunda:formData>
+					<camunda:formField id="ChequeBook" label="دسته چک" type="string" />
+					<camunda:formField id="issueDate" label="تاریخ صدور" type="string" />
+					<camunda:formField id="pageCount" label="تعداد برگ" type="string" />
+					<camunda:formField id="number" label="شماره دسته چک" type="string" />
+					<camunda:formField id="numberOfUnusedCheque" label="تعداد چک استفاده نشده" type="string" />
+					<camunda:formField id="numberOfPassCheque" label="تعداد چک پاس شده" type="string" />
+					<camunda:formField id="Type" label="نوع دسته چک" type="string" />
+					<camunda:formField id="Select" label="انتخاب" type="string" />
+				</camunda:formData>
+			</bpmn:extensionElements>
+			<bpmn:incoming>Flow_1qi7zb9</bpmn:incoming>
+			<bpmn:incoming>Flow_0gmu4w9</bpmn:incoming>
+			<bpmn:outgoing>Flow_0wmjau6</bpmn:outgoing>
+		</bpmn:userTask>
+	</bpmn:process>
+	<bpmn:message id="Message_1lkuckj" name="StrartDeactivateHamoonver2" />
+	<bpmn:signal id="Signal_1v2kd07" name="Signal_1v2kd07" />
+	<bpmn:error id="Error_0mvk0dl" name="Error_Return" errorCode="Error_Return" />
+	<bpmndi:BPMNDiagram id="BPMNDiagram_1">
+		<bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1savrn9">
+			<bpmndi:BPMNShape id="Participant_07zp3a7_di" bpmnElement="Participant_07zp3a7" isHorizontal="true" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
+				<dc:Bounds x="160" y="190" width="1760" height="520" />
+				<bpmndi:BPMNLabel />
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape id="Event_1dgrilx_di" bpmnElement="StartEvent_1" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
+				<dc:Bounds x="222" y="362" width="36" height="36" />
+				<bpmndi:BPMNLabel>
+					<dc:Bounds x="204" y="405" width="74" height="27" />
+				</bpmndi:BPMNLabel>
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape id="Activity_00otv1e_di" bpmnElement="Activity_19ytdbw" isExpanded="true">
+				<dc:Bounds x="230" y="480" width="210" height="120" />
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape id="Event_0uyr7el_di" bpmnElement="Event_0bjaqm0" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
+				<dc:Bounds x="270" y="512" width="36" height="36" />
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape id="Event_12bakhj_di" bpmnElement="Event_12bakhj" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
+				<dc:Bounds x="362" y="512" width="36" height="36" />
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNEdge id="Flow_0i8sr7p_di" bpmnElement="Flow_0i8sr7p">
+				<di:waypoint x="306" y="530" />
+				<di:waypoint x="362" y="530" />
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNShape id="Activity_0yxcl1z_di" bpmnElement="Activity_0e5y75o">
+				<dc:Bounds x="480" y="340" width="100" height="80" />
+				<bpmndi:BPMNLabel />
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape id="BPMNShape_15wsnjr" bpmnElement="Activity_0absh82" isExpanded="true">
+				<dc:Bounds x="1410" y="550" width="210" height="120" />
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape id="BPMNShape_0tu6p2d" bpmnElement="Event_1oiplsj" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
+				<dc:Bounds x="1542" y="582" width="36" height="36" />
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape id="Event_12lf58t_di" bpmnElement="Event_11ylb1r" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
+				<dc:Bounds x="1450" y="582" width="36" height="36" />
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNEdge id="BPMNEdge_10hr96f" bpmnElement="Flow_0mwkjru">
+				<di:waypoint x="1486" y="600" />
+				<di:waypoint x="1542" y="600" />
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNShape id="Activity_1llas7z_di" bpmnElement="Activity_0xvfqwo">
+				<dc:Bounds x="930" y="340" width="100" height="80" />
+				<bpmndi:BPMNLabel />
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape id="Event_1b5jnlq_di" bpmnElement="Event_1b5jnlq" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
+				<dc:Bounds x="1132" y="362" width="36" height="36" />
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape id="BPMNShape_1oy3es5" bpmnElement="Activity_0c3kv56">
+				<dc:Bounds x="710" y="340" width="100" height="80" />
+				<bpmndi:BPMNLabel />
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape id="Activity_0juzjez_di" bpmnElement="Activity_03ffu17">
+				<dc:Bounds x="730" y="480" width="100" height="80" />
+				<bpmndi:BPMNLabel />
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape id="BPMNShape_1m7plb7" bpmnElement="Event_0av68yw" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+				<dc:Bounds x="762" y="402" width="36" height="36" />
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape id="Event_0r4olc8_di" bpmnElement="Event_15w0euu" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+				<dc:Bounds x="532" y="402" width="36" height="36" />
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNEdge id="Flow_18p3n6j_di" bpmnElement="Flow_18p3n6j">
+				<di:waypoint x="258" y="380" />
+				<di:waypoint x="480" y="380" />
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge id="Flow_1qi7zb9_di" bpmnElement="Flow_1qi7zb9">
+				<di:waypoint x="550" y="438" />
+				<di:waypoint x="550" y="520" />
+				<di:waypoint x="730" y="520" />
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge id="Flow_0s292ku_di" bpmnElement="Flow_0s292ku">
+				<di:waypoint x="580" y="380" />
+				<di:waypoint x="710" y="380" />
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge id="Flow_0gmu4w9_di" bpmnElement="Flow_0gmu4w9">
+				<di:waypoint x="780" y="438" />
+				<di:waypoint x="780" y="480" />
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge id="Flow_0wmjau6_di" bpmnElement="Flow_0wmjau6">
+				<di:waypoint x="830" y="520" />
+				<di:waypoint x="1150" y="520" />
+				<di:waypoint x="1150" y="398" />
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge id="Flow_1p1uly2_di" bpmnElement="Flow_1p1uly2">
+				<di:waypoint x="810" y="380" />
+				<di:waypoint x="930" y="380" />
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge id="Flow_1pu741w_di" bpmnElement="Flow_1pu741w">
+				<di:waypoint x="1030" y="380" />
+				<di:waypoint x="1132" y="380" />
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNShape id="Participant_1knpf4p_di" bpmnElement="Participant_1ea8ede" isHorizontal="true" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
+				<dc:Bounds x="160" y="100" width="860" height="60" />
+				<bpmndi:BPMNLabel />
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNEdge id="Flow_09iivvb_di" bpmnElement="Flow_09iivvb">
+				<di:waypoint x="240" y="160" />
+				<di:waypoint x="240" y="362" />
+			</bpmndi:BPMNEdge>
+		</bpmndi:BPMNPlane>
+	</bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -1,0 +1,107 @@
+﻿@page
+@using Server.Infrastructure
+@using oc.TSB.Infrastructure.Features.Processes.ViewModels
+@model Server.Pages.Features.Processes.IndexModel
+
+@{
+	var pageTitle =
+	   $"{oc.TSB.Resources.DataDictionary.ListOf} {oc.TSB.Resources.DataDictionary.Processes}";
+
+	ViewData[oc.TSB.Core.Constants.ViewDataKeyName.PageTitle] = pageTitle;
+
+	var list = Model.DisplayViewModel?.List ?? new List<ProcessResultViewModel>();
+	var itemCount = Model.DisplayViewModel?.RecordCount ?? 0;
+}
+
+<section-page-header>
+	@(pageTitle)
+</section-page-header>
+
+<section-page-actions>
+	<a asp-page="Create">
+		@(Html.DtatGetLinkCaptionForCreate())
+	</a>
+</section-page-actions>
+
+<partial name="PartialViews/_DisplayPageMessages" />
+
+<section-table>
+	<table>
+		<caption>
+			@(pageTitle)
+		</caption>
+
+		<thead>
+			<tr>
+				<th>
+					@(oc.TSB.Resources.DataDictionary.RowNumber)
+				</th>
+				<th>
+					عملیات مدیریتی
+				</th>
+				<th>
+					@(oc.TSB.Resources.DataDictionary.IsActive)
+				</th>
+				<th>
+					@(oc.TSB.Resources.DataDictionary.Title)
+				</th>
+				<th>
+					@(oc.TSB.Resources.DataDictionary.Name)
+				</th>
+				<th>
+					@(oc.TSB.Resources.DataDictionary.Version)
+				</th>
+				<th>
+					@(oc.TSB.Resources.DataDictionary.Ordering)
+				</th>
+				<th>
+					@(oc.TSB.Resources.DataDictionary.InsertDateTime)
+				</th>
+				<th>
+					@(oc.TSB.Resources.DataDictionary.UpdateDateTime)
+				</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			@for (var index = 0; index <= itemCount - 1; index++)
+			{
+				var item = list[index];
+
+				<tr>
+					@(Html.DtatDisplayRowNumberWithTd(value: index + 1))
+
+					<table-actions>
+						<a asp-page="Details" asp-route-id="@(item.Id)">🔍</a>
+						<a asp-page="Update" asp-route-id="@(item.Id)">✏️</a>
+						<a asp-page="Delete" asp-route-id="@(item.Id)">🗑️</a>
+						<a asp-page="/Features/UserTasks/Index" asp-route-id="@(item.Id)">📂</a>
+						@* <a asp-page="Details" asp-route-id="@(item.Id)">
+							@(Html.DtatGetIconDetails())
+						</a> *@
+						@* <a asp-page="Update" asp-route-id="@(item.Id)">
+							@(Html.DtatGetIconUpdate())
+						</a>
+						<a asp-page="Delete" asp-route-id="@(item.Id)">
+							@(Html.DtatGetIconDelete())
+						</a> *@
+					</table-actions>
+
+					@(Html.DtatDisplayBooleanWithTd(value: item.IsActive))
+
+					@(Html.DtatDisplayStringWithTd(value: item.Title))
+
+					@(Html.DtatDisplayStringWithTd(value: item.Name))
+
+					@(Html.DtatDisplayStringWithTd(value: item.Version))
+
+					@(Html.DtatDisplayIntegerWithTd(value: item.Ordering))
+
+					@(Html.DtatDisplayDateTimeOffsetWithTd(value: item.InsertDateTime))
+
+					@(Html.DtatDisplayDateTimeOffsetWithTd(value: item.UpdateDateTime))
+				</tr>
+			}
+		</tbody>
+	</table>
+</section-table>

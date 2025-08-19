@@ -1,0 +1,16 @@
+﻿@page
+
+@model Pages.Errors.Error400Model
+
+@{
+	var pageTitle = "خطای 400";
+	// $"{oc.TSB.Resources.DataDictionary.Error400} ;
+
+	ViewData[oc.TSB.Core.Constants.ViewDataKeyName.PageTitle] = pageTitle;
+}
+
+<h3 class="text-center mt-3">
+	@(pageTitle)
+</h3>
+
+<hr />

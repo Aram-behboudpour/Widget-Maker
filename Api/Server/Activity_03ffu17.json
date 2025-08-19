@@ -1,0 +1,56 @@
+{
+  "processName": "DeactivateHamoon",
+  "processLabel": "DeactivateHamoon",
+  "formName": "خطا",
+  "formLabel": "خطا",
+  "componentsList": [
+    {
+      "type": "space",
+      "componentId": "46e6a148-9c94-49f3-b8d6-55c30924bfce",
+      "parentComponentId": null
+    },
+    {
+      "type": "space",
+      "componentId": "24f29aa8-5cc9-4ef0-a01f-e3f17d68d8df",
+      "parentComponentId": null
+    },
+    {
+      "type": "space",
+      "componentId": "e197fbd0-6c35-4389-8866-6f040e577928",
+      "parentComponentId": null
+    },
+    {
+      "type": "space",
+      "componentId": "1d8909e5-379b-4ad9-b032-4976f0c1c86b",
+      "parentComponentId": null
+    },
+    {
+      "type": "space",
+      "componentId": "cdef029e-6954-41ff-9b3a-09c8d6cacca6",
+      "parentComponentId": null
+    },
+    {
+      "type": "space",
+      "componentId": "5536264e-b9ae-4e6d-ba30-2210eb64e62a",
+      "parentComponentId": null
+    },
+    {
+      "type": "space",
+      "componentId": "37f7b92a-8a45-436f-afff-f75351fcd0a3",
+      "parentComponentId": null
+    },
+    {
+      "type": "space",
+      "componentId": "14f874c5-06ef-4f5b-a5ac-7330a75b39c4",
+      "parentComponentId": null
+    },
+    {
+      "type": "button",
+      "componentId": "fcf90e74-5924-44e4-a2ce-12687d78e7ea",
+      "parentComponentId": null,
+      "buttonProperties": {
+        "type": "submit"
+      }
+    }
+  ]
+}
