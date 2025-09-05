@@ -24,7 +24,6 @@ public class UserTaskDragAndDropCommandHandler: object,
         // **************************************************
         var result = new
                       FluentResults.Result<Microsoft.AspNetCore.Mvc.Rendering.SelectList>();
-
         // **************************************************
         try
         {

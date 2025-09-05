@@ -4,6 +4,7 @@ using oc.TSB.Infrastructure.Features.UserTaskes.ViewModels;
 using oc.TSB.Infrastructure.Shared;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace oc.TSB.Infrastructure.Features.UserTaskes.Repositories;
 
@@ -99,7 +100,7 @@ public class UserTaskRepository :
 
             .OrderBy(current => current.Ordering)
 
-            .Select(current => new IdNameViewModel<System.Guid?>
+            .Select(current => new IdNameViewModel<Guid?>
             {
                 Id = current.Id,
                 KeyName = current.Title,
@@ -125,4 +126,45 @@ public class UserTaskRepository :
     }
 
     #endregion /GetUserTaskSelectListAsync()
+
+    #region CreateByProcessIdAsync
+    public async Task
+              <UserTask> CreateByProcessIdAsync(string title,string name, Guid processId)
+    {
+        var newEntity =
+            new UserTask()
+            {
+                Title = title,
+                Name = name,
+                IsActive = true,
+                ProcessId = processId,
+            };
+
+        var entityEntry =
+            await
+            DatabaseContext.AddAsync(entity: newEntity);
+
+        var affectedRows =
+            await
+            DatabaseContext.SaveChangesAsync();
+        // **************************************************
+
+        // **************************************************    
+        return newEntity;
+    }
+    #endregion /CreateByProcessIdAsync
+
+    #region GetUserTaskByIdAsync
+    public async Task
+              <UserTask?> GetUserTaskByIdAsync(Guid id)
+    {
+        var userTask =
+            await
+              Dbset
+            .Where(current => current.Id == id)
+            .FirstOrDefaultAsync();
+
+        return userTask;
+    }
+    #endregion /GetUserTaskByIdAsync
 }

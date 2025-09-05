@@ -4,7 +4,7 @@ using oc.TSB.Core.Features.CamundaProcesses;
 namespace oc.TSB.Application.Features.Processes.CommandHandlers;
 
 public class ProcessCreateCommandHandler : object,
-         Faraz.Mediator.IRequestHandler<ProcessCreateCommand,Process>
+         Faraz.Mediator.IRequestHandler<ProcessCreateCommand, Process?>
 {
     public ProcessCreateCommandHandler(Infrastructure.IUnitOfWork unitOfWork) : base()
     {
@@ -15,13 +15,13 @@ public class ProcessCreateCommandHandler : object,
     public
         async
         System.Threading.Tasks.Task
-        <FluentResults.Result<Process>>
+        <FluentResults.Result<Process?>>
         Handle(ProcessCreateCommand request,
                            System.Threading.CancellationToken cancellationToken)
     {
         // **************************************************
         var result = new
-                      FluentResults.Result<Process>();
+                      FluentResults.Result<Process?>();
         // **************************************************
         try
         {
@@ -32,8 +32,17 @@ public class ProcessCreateCommandHandler : object,
               ;
             // **************************************************
 
-            result.WithValue(value: process);
+            if (process is null)
+            {
+                var errorMessage = "نسخه تکراری!";
 
+                result.WithError
+                   (errorMessage: errorMessage);
+            }
+            else
+            {
+                result.WithValue(value: process);
+            }     
         }
         catch (System.Exception ex)
         {

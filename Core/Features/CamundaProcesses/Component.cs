@@ -5,6 +5,7 @@ public class Component : CamundaBaseModel
     public Component() : base()
     {
         Title = string.Empty;
+        Name = string.Empty;
         Ordering = 10_000;
 
         Children = new
@@ -63,7 +64,7 @@ public class Component : CamundaBaseModel
     public string Name { get; set; }
     #endregion /public string Name { get; set; }
 
-    #region public ComponentType? ComponentType { get; set; }
+    #region public ComponentType ComponentType { get; set; }
     /// <summary>
     /// نوع کامپوننت
     /// </summary>
@@ -71,8 +72,8 @@ public class Component : CamundaBaseModel
         (ResourceType = typeof(Resources.DataDictionary),
         Name = nameof(Resources.DataDictionary.ComponentType))]
 
-    public Enums.ComponentTyoe? ComponentType { get; set; }
-    #endregion /public ComponentType? ComponentType { get; set; }
+    public Enums.ComponentType ComponentType { get; set; }
+    #endregion /public ComponentType ComponentType { get; set; }
 
     #region public Guid UserTaskId { get; set; }
     /// <summary>

@@ -106,7 +106,6 @@ public class UserTask : CamundaBaseModel
     public virtual Process? Process { get; set; }
     #endregion /public virtual Process? Process { get; set; }
 
-
     #region public int Ordering { get; set; }
     /// <summary>
     /// چیدمان

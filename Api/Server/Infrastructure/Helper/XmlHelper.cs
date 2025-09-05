@@ -1,4 +1,5 @@
-﻿using oc.TSB.Infrastructure.Features.Components.ViewModels;
+﻿using oc.TSB.Core.Features.CamundaProcesses.Enums;
+using oc.TSB.Infrastructure.Features.Components.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -178,16 +179,18 @@ public static class XmlHelper : object
 
                     componentList.Add(new ComponentViewModel
                     {
-                        Type = "space",
+                        Type = "Space",
+                        ComponentType = ComponentType.Space,
                         ComponentId = Guid.NewGuid(),
                         ParentComponentId = null
                     });
 
-                    if (defaultVal == "textInput")
+                    if (defaultVal == "TextInput")
                     {
                         componentList.Add(new ComponentViewModel
                         {
-                            Type = "textInput",
+                            Type = "TextInput",
+                            ComponentType = ComponentType.TextInput,
                             ComponentId = Guid.NewGuid(),
                             ParentComponentId = null,
                             TextInputProperties = new ComponentViewModel.TextInputProps
@@ -206,11 +209,12 @@ public static class XmlHelper : object
                             }
                         });
                     }
-                    else if (defaultVal == "checkBox")
+                    else if (defaultVal == "CheckBox")
                     {
                         componentList.Add(new ComponentViewModel
                         {
-                            Type = "checkBox",
+                            Type = "CheckBox",
+                            ComponentType = ComponentType.CheckBox,
                             ComponentId = Guid.NewGuid(),
                             ParentComponentId = null,
                             CheckBoxProperties = new ComponentViewModel.CheckBoxProps
@@ -236,7 +240,8 @@ public static class XmlHelper : object
             // دکمه ارسال
             componentList.Add(new ComponentViewModel
             {
-                Type = "button",
+                Type = "Button",
+                ComponentType = ComponentType.Button,   
                 ComponentId = Guid.NewGuid(),
                 ParentComponentId = null,
                 ButtonProperties = new  ComponentViewModel.ButtonProps

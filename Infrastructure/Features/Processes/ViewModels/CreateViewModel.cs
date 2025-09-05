@@ -7,7 +7,6 @@ public class CreateViewModel : object
         Ordering = 10_000;
         Title = string.Empty;
         Name = string.Empty;
-        Version = string.Empty;
     }
     #region Properties
 
@@ -61,7 +60,7 @@ public class CreateViewModel : object
     public string Name { get; set; }
     #endregion /public string Name { get; set; }
 
-    #region public string Version { get; set; }
+    #region public int Version { get; set; }
     /// <summary>
     /// نسخه فرایند
     /// </summary>
@@ -74,8 +73,8 @@ public class CreateViewModel : object
         ErrorMessageResourceType = typeof(Resources.Messages.Validations),
         ErrorMessageResourceName = nameof(Resources.Messages.Validations.Required))]
 
-    public string Version { get; set; }
-    #endregion /public string Version { get; set; }
+    public int Version { get; set; }
+    #endregion /public int Version { get; set; }
 
     #region public int Ordering { get; set; }
     /// <summary>

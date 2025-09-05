@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using oc.TSB.Application.Features.Components.Commands;
 using oc.TSB.Application.Features.Processes.Commands;
 using oc.TSB.Application.Features.UserTasks.Commands;
-using oc.TSB.Core.Features.CamundaProcesses;
 using oc.TSB.Infrastructure.Features.Components.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Server.Pages.Features.Components;
@@ -19,7 +19,12 @@ public class DragAndDropModel : BasePageModel
     public DragAndDropModel(MediatR.IMediator mediator) : base(mediator: mediator)
     {
         ViewModel = new();
-        AllComponents = new List<Component>();
+
+        SearchedComponents = new
+            List<ComponentViewModel>();
+
+        AllComponents = new
+            List<ComponentViewModel>();
     }
     #endregion /Constructor
 
@@ -30,13 +35,14 @@ public class DragAndDropModel : BasePageModel
     public oc.TSB.Infrastructure.Shared.DragAndDropViewModel ViewModel { get; set; }
     public Microsoft.AspNetCore.Mvc.Rendering.SelectList? ProcessesSelectList { get; set; }
     public Microsoft.AspNetCore.Mvc.Rendering.SelectList? UserTasksSelectList { get; set; }
-    public IList<Component> AllComponents { get; set; }
-    public IList<ComponentViewModel> Newcomponents { get; set; }
+    public IList<ComponentViewModel> AllComponents { get; set; }
+    public IList<ComponentViewModel> SearchedComponents { get; set; }
 
     #endregion /Properties
 
     public async Task<IActionResult> OnGetAsync()
     {
+
         var request = new
             GetAllComponentsCommand();
 
@@ -51,43 +57,66 @@ public class DragAndDropModel : BasePageModel
         return Page();
     }
 
-    //public async Task<IActionResult> OnPostSaveTreeAsync([FromBody] List<ComponentTreeItem> tree)
-    //{
-    //    if (tree == null || !tree.Any())
-    //        return BadRequest();
+    #region OnPostSaveTreeAsync
+    public async Task<IActionResult> OnPostSaveTreeAsync
+        ([FromBody]
+        SaveTreeRequest request)
+    {
+        if (request.Tree == null || !request.Tree.Any())
+            return BadRequest();
 
-    //    var allComponentIds = tree.Select(x => x.Id).ToList();
-    //    var components = await _unitOfWork.Components.GetByIdsAsync(allComponentIds);
+        var command = new
+           SaveTreeCommand
+        {
+            Tree = request.Tree,
+            ProcessId = request.ProcessId,
+            UserTaskId = request.UserTaskId,
+        };
 
-    //    foreach (var item in tree)
-    //    {
-    //        var comp = components.FirstOrDefault(c => c.Id == item.Id);
-    //        if (comp != null)
-    //        {
-    //            comp.ParentComponentId = item.ParentId;
-    //        }
-    //    }
+        var result =
+            await Mediator.Send(command);
 
-    //    await _unitOfWork.SaveAsync();
-    //    return new JsonResult(new { success = true });
-    //}
+        return new JsonResult(new { success = true });
+    }
 
-    //public async Task<IActionResult> OnGetDetailsAsync(Guid id)
-    //{
-    //    var component = await _unitOfWork.Components.GetByIdAsync(id);
+    #endregion /OnPostSaveTreeAsync
 
-    //    if (component == null)
-    //        return Content("کامپوننت یافت نشد");
+    #region OnGetDetailsAsync(Guid id)
+    public async Task<IActionResult> OnGetDetailsAsync(Guid? id)
+    {
+        if (!id.HasValue)
+        {
+            return BadRequest();
+        }
 
-    //    // می‌تونی از Partial View استفاده کنی یا مستقیم HTML بسازی
-    //    var html = $@"
-    //            <strong>نام:</strong> {component.Name}<br/>
-    //            <strong>عنوان:</strong> {component.Title}<br/>
-    //            <strong>پدر:</strong> {(component.ParentComponentId.HasValue ? component.ParentComponentId.ToString() : "ندارد")}
-    //        ";
+        var request = new
+           GetComponentDetailsByIdCommand
+        {
+            ComponentId = id.Value,
+        };
 
-    //    return Content(html, "text/html");
-    //}
+        var result = await Mediator.Send(request);
+
+
+        if (result == null)
+            return Content("کامپوننت یافت نشد");
+
+        var name = System.Net.WebUtility.HtmlEncode(result.Value.Name);
+        var title = System.Net.WebUtility.HtmlEncode(result.Value.Title);
+        var parent = result.Value.ParentComponentId.HasValue
+            ? result.Value.ParentComponentId.ToString()
+            : "ندارد";
+
+        var html = $@"
+        <strong>نام:</strong> {name}<br/>
+        <strong>عنوان:</strong> {title}<br/>
+        <strong>پدر:</strong> {parent}
+    ";
+
+        return Content(html, "text/html");
+    }
+
+    #endregion /OnGetDetailsAsync(Guid id)
 
     //[IgnoreAntiforgeryToken]
     //public async Task<IActionResult> OnPostUnlinkAsync([FromBody] Guid id)
@@ -128,14 +157,9 @@ public class DragAndDropModel : BasePageModel
     //    return new JsonResult(new { success = true });
     //}
 
-    //public class ComponentTreeItem
-    //{
-    //    public Guid Id { get; set; }
-    //    public Guid? ParentId { get; set; }
-    //}
-
     #region UpdateProcessSelectListAsync()
     public async Task UpdateProcessSelectListAsync(Guid? ProcessId)
+
     {
         var request = new
              ProcessDragAndDropCommand();
@@ -160,9 +184,11 @@ public class DragAndDropModel : BasePageModel
 
     #region OnPostComponentLoadingAsync()
     public async System.Threading.Tasks.Task
-        <Microsoft.AspNetCore.Mvc.IActionResult> OnPostComponentLoadingAsync()
+        <Microsoft.AspNetCore.Mvc.IActionResult> OnPostComponentsLoadingAsync()
     {
         // **************************************************
+        var userTaskId = ViewModel.UserTaskId;
+
         var request = new
            GetAllComponentsCommand();
 
@@ -172,7 +198,7 @@ public class DragAndDropModel : BasePageModel
         // **************************************************
         await UpdateProcessSelectListAsync(ProcessId: null);
 
-        await UpdateUserTasksSelectListAsync(UserTaskId: null);
+        await UpdateUserTasksSelectListAsync(UserTaskId: userTaskId);
         // **************************************************
         string xmlFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "xml", "sampleXmlFile.xml");
 
@@ -183,7 +209,7 @@ public class DragAndDropModel : BasePageModel
         // **************************************************
         var xmlContent = System.IO.File.ReadAllText(xmlFilePath);
 
-        Newcomponents = XmlHelper.GetComponentsForUserTask(xmlContent, "Activity_03ffu17");
+        SearchedComponents = XmlHelper.GetComponentsForUserTask(xmlContent, "Activity_03ffu17");
 
         return Page();
     }

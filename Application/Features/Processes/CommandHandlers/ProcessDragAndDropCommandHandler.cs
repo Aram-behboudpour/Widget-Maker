@@ -1,4 +1,5 @@
 ﻿using oc.TSB.Application.Features.Processes.Commands;
+using System.Threading.Tasks;
 
 namespace oc.TSB.Application.Features.Processes.CommandHandlers;
 
@@ -15,7 +16,7 @@ public class ProcessDragAndDropCommandHandler: object,
 
     public
         async
-         System.Threading.Tasks.Task
+         Task
          <FluentResults.Result
             <Microsoft.AspNetCore.Mvc.Rendering.SelectList>>
              
@@ -25,7 +26,6 @@ public class ProcessDragAndDropCommandHandler: object,
         // **************************************************
         var result = new
                       FluentResults.Result<Microsoft.AspNetCore.Mvc.Rendering.SelectList>();
-
         // **************************************************
         try
         {
@@ -34,7 +34,6 @@ public class ProcessDragAndDropCommandHandler: object,
               UnitOfWork.Processes
               .GetProcessSelectListAsync()
               ;
-
             // **************************************************
 
             result.WithValue(value: processSelectList);
@@ -45,7 +44,7 @@ public class ProcessDragAndDropCommandHandler: object,
             // Logger.LogError(exception: ex, message: ex.Message);
 
             result.WithError
-                (errorMessage: ex.Message);
+                (errorMessage:"Unexpected Error!");
         }
 
         return result;

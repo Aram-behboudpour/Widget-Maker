@@ -56,11 +56,11 @@
 				<label asp-for="ViewModel.UserTaskId" style="display: block; margin-bottom: 0.5rem;">
 					@(oc.TSB.Resources.DataDictionary.UserTask)
 				</label>
-				<select asp-for="ViewModel.ProcessId" asp-items="Model.UserTasksSelectList" class="form-control" style="width: 100%;"></select>
+				<select asp-for="ViewModel.UserTaskId" asp-items="Model.UserTasksSelectList" class="form-control" style="width: 100%;"></select>
 			</div>
 
 			<div style="display: flex; align-items: center; justify-content: center; width: 25%; padding: 1rem;">
-				<button asp-page-handler="ComponentLoading" type="submit" class="btn btn-success btn-sm" style="height: 40px; min-width: 100px;">
+				<button asp-page-handler="ComponentsLoading" type="submit" class="btn btn-success btn-sm" style="height: 40px; min-width: 100px;">
 					لودینگ کامپوننت
 				</button>
 			</div>
@@ -74,8 +74,8 @@
 				<div id="componentList">
 					@foreach (var comp in Model.AllComponents)
 					{
-						<div class="component-card" data-id="@comp.Id" data-name="@comp.Name">
-							<div class="card-header">@comp.Name</div>
+						<div class="component-card" data-id="@comp.ComponentId" data-type="@comp.Type">
+							<div class="card-header">@comp.Type</div>
 						</div>
 					}
 				</div>
@@ -86,47 +86,18 @@
 				<h4>چیدمان</h4>
 				<div id="dropZone" class="component-tree">
 
-					@if (Model.Newcomponents != null && Model.Newcomponents.Count > 0)
+					@if (Model.SearchedComponents != null && Model.SearchedComponents.Count > 0)
 					{
-						@foreach (var comp in Model.Newcomponents)
-						{
-							if (comp.Type == "space")
-							{
-								<div class="component-card" data-id="@comp.ComponentId" data-name="@comp.Type">
-									<div class="card-header">@comp.Type</div>
-								</div>
-							}
-							else if (comp.Type == "textInput")
-							{
-								@* <div>
-								ورودی متن: @comp.TextInputProperties.Label
-							</div> *@
-								<div class="component-card" data-id="@comp.ComponentId" data-name="@comp.Type">
-									<div class="card-header">@comp.Type</div>
-								</div>
-
-							}
-							else if (comp.Type == "checkBox")
-							{
-								@* <div>
-								چک‌باکس: @comp.CheckBoxProperties.Label
-								( @(comp.CheckBoxProperties.Value ? "فعال" : "غیرفعال") )
-							</div> *@
-								<div class="component-card" data-id="@comp.ComponentId" data-name="@comp.Type">
-									<div class="card-header">@comp.Type</div>
-								</div>
-							}
-							else if (comp.Type == "button")
-							{
-								@* <div>
-									<button type="@comp.ButtonProperties.Type">
-										@(comp.ButtonProperties.Type == "submit" ? "ارسال" : "دکمه")
-									</button>
-								</div> *@
-								<div class="component-card" data-id="@comp.ComponentId" data-name="@comp.Type">
-									<div class="card-header">@comp.Type</div>
-								</div>
-							}
+						@foreach (var comp in Model.SearchedComponents)
+						{							
+							<div class="component-card" data-id="@comp.ComponentId"  data-type="@comp.Type">
+								<div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+									<span>@comp.Type</span>
+									<button type="button" class="delete-btn" 
+                                style="background:none; border:none; color:red; cursor:pointer;">❌</button>
+                                </div>
+								<div class="children-list"></div>
+							</div>
 						}
 					}
 
@@ -160,6 +131,47 @@
 			// ناحیه اصلی (ستون وسط)
 			enableNesting(document.getElementById('dropZone'));
 
+// فعال‌سازی eventها برای کامپوننت‌های لود شده از سرور
+document.querySelectorAll('#dropZone .component-card').forEach(card => {
+    const id = card.dataset.id;
+
+    // نمایش جزئیات در ستون چپ
+    card.addEventListener('click', () => showDetails(id, card));
+
+    // دکمه حذف
+    const delBtn = card.querySelector('.delete-btn');
+    if (delBtn) {
+        delBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+
+            if (card.classList.contains('selected')) {
+                document.getElementById('detailsBox').innerHTML = 'لطفاً یک کامپوننت را انتخاب کنید';
+            }
+
+            card.remove();
+
+            fetch('/Features/Components/DragAndDrop?handler=Unlink', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': document.querySelector('[name="__RequestVerificationToken"]').value
+                },
+                body: JSON.stringify(id)
+            }).then(res => {
+                if (!res.ok) {
+                    alert('❌ خطا در ارتباط با سرور هنگام حذف رابطه');
+                }
+            });
+        });
+    }
+
+    // فعال کردن nesting برای فرزندان این کارت
+    const childContainer = card.querySelector('.children-list');
+    if (childContainer) {
+        enableNesting(childContainer);
+    }
+});
+
 			function enableNesting(el) {
 				new Sortable(el, {
 					group: 'components',
@@ -169,15 +181,15 @@
 					onAdd: function (evt) {
 						const oldEl = evt.item;
 						const id = oldEl.dataset.id;
-						const name = oldEl.dataset.name;
+						const type = oldEl.dataset.type;
 
 						const newCard = document.createElement('div');
 						newCard.className = 'component-card';
 						newCard.dataset.id = id;
-						newCard.dataset.name = name;
+						newCard.dataset.type = type;
 							  newCard.innerHTML = `
 							<div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
-								<span>${name}</span>
+								<span>${type}</span>
 								<button class="delete-btn" style="background: none; border: none; color: red; cursor: pointer;">❌</button>
 							</div>
 							<div class="children-list"></div>
@@ -237,7 +249,14 @@
 				for (let i = 0; i < parentEl.children.length; i++) {
 					const card = parentEl.children[i];
 					const id = card.dataset.id;
-					result.push({ Id: id, ParentId: parentId, Order: i });
+                    const type = card.dataset.type;
+
+					result.push({ 
+                         ComponentId: id, 
+                         ParentComponentId: parentId, 
+                         Order: i ,
+                         Type: type
+                        });
 
 					const childContainer = card.querySelector('.children-list');
 					if (childContainer) {
@@ -249,8 +268,15 @@
 
 			document.getElementById('saveBtn').addEventListener('click', () => {
 				const tree = extractTree(document.getElementById('dropZone'));
+                const processId = document.getElementById('ViewModel_ProcessId').value;
+                const userTaskId = document.getElementById('ViewModel_UserTaskId').value;
+				const payload = {
+						ProcessId: processId,
+						UserTaskId: userTaskId,
+						Tree: tree
+					};
 
-				console.log('Tree:', tree);
+				console.log('Payload:', payload);
 
 				fetch('/Features/Components/DragAndDrop?handler=SaveTree', {
 					method: 'POST',
@@ -258,7 +284,7 @@
 						'Content-Type': 'application/json',
 						'RequestVerificationToken': document.querySelector('[name="__RequestVerificationToken"]').value
 					},
-					body: JSON.stringify(tree)
+					body: JSON.stringify(payload)
 				}).then(res => {
 					if (res.ok) alert('✅ ذخیره شد');
 					else alert('❌ خطا در ذخیره');

@@ -61,6 +61,15 @@ namespace oc.TSB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Button.
+        /// </summary>
+        public static string Button {
+            get {
+                return ResourceManager.GetString("Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to تنظیمات ویجت ساز کموندا.
         /// </summary>
         public static string CamundaProssesSettings {
@@ -174,6 +183,15 @@ namespace oc.TSB.Resources {
         public static string IsTestData {
             get {
                 return ResourceManager.GetString("IsTestData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to داده تستی.
+        /// </summary>
+        public static string IsTrstData {
+            get {
+                return ResourceManager.GetString("IsTrstData", resourceCulture);
             }
         }
         

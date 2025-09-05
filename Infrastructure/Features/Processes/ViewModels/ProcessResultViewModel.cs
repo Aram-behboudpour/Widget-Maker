@@ -22,11 +22,15 @@ public class ProcessResultViewModel:object
     //**********
 
     //**********
-    public string? Version { get; set; }
+    public int? Version { get; set; }
     //**********
 
     //**********
     public int Ordering { get; set; }
+    //**********
+
+    //**********
+    public bool IsTestData { get; set; }
     //**********
 
     //**********

@@ -1,15 +1,17 @@
 ﻿using Faraz;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.TeamFoundation.SourceControl.WebApi;
 using oc.TSB.Core.Features.CamundaProcesses;
 using oc.TSB.Infrastructure.Features.Processes.ViewModels;
 using oc.TSB.Infrastructure.Shared;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace oc.TSB.Infrastructure.Features.Processes.Repositories;
 
 public class ProcessRepository :
-     Faraz.Persistance.Repository<Process ,Guid>, IProcessRepository
+     Faraz.Persistance.Repository<Process, Guid>, IProcessRepository
 {
     protected internal ProcessRepository
         (DbContext databaseContext) : base(databaseContext: databaseContext)
@@ -48,6 +50,7 @@ public class ProcessRepository :
                     Id = current.Id,
                     IsActive = current.IsActive,
                     Title = current.Title,
+                    IsTestData = current.IsTestData,
                     Name = current.Name,
                     Version = current.Version,
                     Ordering = current.Ordering,
@@ -86,17 +89,15 @@ public class ProcessRepository :
     #endregion /GetByPageAsync(int page)
 
     #region GetProcessSelectListAsync()
-    public async System.Threading.Tasks.Task
+    public async Task
         <Microsoft.AspNetCore.Mvc.Rendering.SelectList> GetProcessSelectListAsync
         (object? selectedValue = null)
     {
         var list =
             await
              Dbset
-
-            .OrderBy(current => current.Ordering)
-
-            .Select(current => new IdNameViewModel<System.Guid?>
+            .OrderByDescending(current => current.InsertDateTime)
+            .Select(current => new IdNameViewModel<Guid?>
             {
                 Id = current.Id,
                 KeyName = current.Title,
@@ -124,10 +125,21 @@ public class ProcessRepository :
     #endregion /GetProcessSelectListAsync()
 
     #region CreateProcessAsync
-
     public async System.Threading.Tasks.Task
-      <Process> CreateProcessAsync(CreateViewModel viewmodel)
+      <Process?> CreateProcessAsync(CreateViewModel viewmodel)
     {
+        var foundedItem =
+            await
+            Dbset
+            .Where(current => current.Title == viewmodel.Title.Trim())
+            .Where(current => current.Version == viewmodel.Version)
+            .Where(current => current.IsTestData == false)
+            .FirstOrDefaultAsync();
+
+        if (foundedItem != null)
+        {
+            return null;
+        }
 
         var newEntity =
             new Process()
@@ -154,7 +166,6 @@ public class ProcessRepository :
     #endregion /CreateProcessAsync
 
     #region GetDetailsProcessAsync
-
     public async System.Threading.Tasks.Task
             <DetailsOrDeleteViewModel?> GetDetailsProcessAsync(Guid? id)
     {
@@ -277,4 +288,33 @@ public class ProcessRepository :
     }
     #endregion /UpdateProcessAsync
 
+    #region GetLatestVersionProcessAsync
+    public async Task
+              <int> GetLatestVersionProcessAsync(string title)
+    {
+        var version =
+            await
+              Dbset
+            .Where(current => current.Title.Trim() == title.Trim())
+            .OrderByDescending(current => current.Version)
+            .Select(current => current.Version)
+            .FirstOrDefaultAsync();
+
+        return version;
+    }
+    #endregion /GetLatestVersionProcessAsync
+
+    #region GetProcessByIdAsync
+    public async Task
+              <Process> GetProcessByIdAsync(Guid id)
+    {
+        var process =
+            await
+              Dbset
+            .Where(current => current.Id == id)
+            .FirstOrDefaultAsync();
+
+        return process;
+    }
+    #endregion /GetProcessByIdAsync
 }

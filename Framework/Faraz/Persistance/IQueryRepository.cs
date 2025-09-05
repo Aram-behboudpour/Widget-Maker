@@ -1,4 +1,6 @@
-﻿namespace Faraz.Persistance;
+﻿using System;
+
+namespace Faraz.Persistance;
 
 public interface IQueryRepository<T,TIdentity> where T : Domain.IEntity<TIdentity>
 {

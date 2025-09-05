@@ -51,6 +51,9 @@
 				<th>
 					@(oc.TSB.Resources.DataDictionary.Version)
 				</th>
+                 <th>
+					@(oc.TSB.Resources.DataDictionary.IsTrstData)
+				</th>
 				<th>
 					@(oc.TSB.Resources.DataDictionary.Ordering)
 				</th>
@@ -93,7 +96,9 @@
 
 					@(Html.DtatDisplayStringWithTd(value: item.Name))
 
-					@(Html.DtatDisplayStringWithTd(value: item.Version))
+					@(Html.DtatDisplayIntegerWithTd(value: item.Version))
+
+                    @(Html.DtatDisplayBooleanWithTd(value: item.IsTestData))
 
 					@(Html.DtatDisplayIntegerWithTd(value: item.Ordering))
 

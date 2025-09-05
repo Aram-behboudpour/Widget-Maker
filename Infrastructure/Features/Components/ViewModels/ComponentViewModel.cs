@@ -1,4 +1,5 @@
-﻿using System;
+﻿using oc.TSB.Core.Features.CamundaProcesses.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace oc.TSB.Infrastructure.Features.Components.ViewModels;
@@ -19,8 +20,10 @@ public class ComponentViewModel : object
         ButtonProperties=
             new ButtonProps();
     }
-    public string Type { get; set; }
+    public ComponentType ComponentType { get; set; }
     public Guid ComponentId { get; set; }
+    public string Type { get; set; }
+    public int Order { get; set; }
     public Guid? ParentComponentId { get; set; }
     public TextInputProps TextInputProperties { get; set; }
     public CheckBoxProps CheckBoxProperties { get; set; }
