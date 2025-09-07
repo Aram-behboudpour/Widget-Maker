@@ -1,4 +1,6 @@
-﻿namespace oc.TSB.Infrastructure.Features.Components.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace oc.TSB.Infrastructure.Features.Components.Configuration;
 
 internal class ComponentConfiguration : object,
     Microsoft.EntityFrameworkCore.IEntityTypeConfiguration<Core.Features.CamundaProcesses.Component>
@@ -7,8 +9,8 @@ internal class ComponentConfiguration : object,
     {
     }
     public void Configure
-(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder
-<Core.Features.CamundaProcesses.Component> builder)
+        (Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder
+        <Core.Features.CamundaProcesses.Component> builder)
     {
         // **************************************************
         //builder
@@ -19,10 +21,16 @@ internal class ComponentConfiguration : object,
 
         // **************************************************
         builder
-            .HasKey(current => current.Id)
-            ;
+           .HasKey(current => current.Id)
+           .IsClustered(clustered: false)
+           ;
         // **************************************************
 
+        // **************************************************
+        builder
+         .Property(current => current.Title)
+         .IsUnicode(unicode: false)
+         ;
         // **************************************************
 
         // **************************************************

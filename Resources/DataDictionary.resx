@@ -117,11 +117,35 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AdminDescription" xml:space="preserve">
+    <value>توضیحات مدیریتی</value>
+  </data>
+  <data name="AuthenticationTypeGoogle" xml:space="preserve">
+    <value>گوگل</value>
+  </data>
+  <data name="AuthenticationTypeInternal" xml:space="preserve">
+    <value>داخلی</value>
+  </data>
+  <data name="BaseTable" xml:space="preserve">
+    <value>اطلاعات پایه</value>
+  </data>
+  <data name="BaseTableType" xml:space="preserve">
+    <value>نوع اطلاعات پایه</value>
+  </data>
   <data name="Button" xml:space="preserve">
     <value>Button</value>
   </data>
   <data name="CamundaProssesSettings" xml:space="preserve">
     <value>تنظیمات ویجت ساز کموندا</value>
+  </data>
+  <data name="CellPhoneNumber" xml:space="preserve">
+    <value> شماره تلفن همراه</value>
+  </data>
+  <data name="CellPhoneNumberVerificationKey" xml:space="preserve">
+    <value>کد تایید شماره تلفن همراه</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>کد</value>
   </data>
   <data name="Component" xml:space="preserve">
     <value>کامپوننت کموندا</value>
@@ -135,6 +159,9 @@
   <data name="ComponentType" xml:space="preserve">
     <value>نوع کامپوننت</value>
   </data>
+  <data name="CoverImageUrl" xml:space="preserve">
+    <value>نشانی تصویر کاور</value>
+  </data>
   <data name="CreatedAt" xml:space="preserve">
     <value>زمان ایجاد</value>
   </data>
@@ -144,11 +171,26 @@
   <data name="CreatorUser" xml:space="preserve">
     <value>کاربر ایجاد کننده</value>
   </data>
+  <data name="DeleteDateTime" xml:space="preserve">
+    <value>زمان حذف </value>
+  </data>
   <data name="DeleteOf" xml:space="preserve">
     <value>حذف</value>
   </data>
+  <data name="EmailAddress" xml:space="preserve">
+    <value> نشانی پست الکترونیکی</value>
+  </data>
+  <data name="EmailAddressVerificationKey" xml:space="preserve">
+    <value>کد تایید نشانی پست‌الکترونیکی</value>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>جنسیت</value>
+  </data>
   <data name="Id" xml:space="preserve">
     <value>شناسه</value>
+  </data>
+  <data name="ImageUrl" xml:space="preserve">
+    <value>نشانی تصویر</value>
   </data>
   <data name="InsertDateTime" xml:space="preserve">
     <value>زمان ایجاد</value>
@@ -156,11 +198,53 @@
   <data name="IsActive" xml:space="preserve">
     <value>وضعیت</value>
   </data>
+  <data name="IsCellPhoneNumberVerified" xml:space="preserve">
+    <value>شماره تلفن همراه تایید شده است</value>
+  </data>
+  <data name="IsCompany" xml:space="preserve">
+    <value>مشتری حقوقی</value>
+  </data>
+  <data name="IsDeleted" xml:space="preserve">
+    <value>حذف شده</value>
+  </data>
+  <data name="IsEmailAddressVerified" xml:space="preserve">
+    <value>پست الکترونیکی تایید شده است</value>
+  </data>
+  <data name="IsFeatured" xml:space="preserve">
+    <value> ویژه بودن کاربر</value>
+  </data>
+  <data name="IsNationalCodeVerified" xml:space="preserve">
+    <value>کد ملی تایید شده</value>
+  </data>
+  <data name="IsProfilePublic" xml:space="preserve">
+    <value>پروفایل عمومی است</value>
+  </data>
   <data name="IsTestData" xml:space="preserve">
     <value>داده تستی</value>
   </data>
   <data name="IsTrstData" xml:space="preserve">
     <value>داده تستی</value>
+  </data>
+  <data name="IsUndeletable" xml:space="preserve">
+    <value> غیر قابل حذف</value>
+  </data>
+  <data name="IsVerified" xml:space="preserve">
+    <value> تایید شده</value>
+  </data>
+  <data name="IsVisibleInContactUsPage" xml:space="preserve">
+    <value>نمایش در صفحه تماس با ما</value>
+  </data>
+  <data name="KeyName" xml:space="preserve">
+    <value> نام کلیدی</value>
+  </data>
+  <data name="LastChangePasswordDateTime" xml:space="preserve">
+    <value>آخرین زمان تغییر گذرواژه</value>
+  </data>
+  <data name="LastEducationDegree" xml:space="preserve">
+    <value>آخرین مدرک تحصیلی</value>
+  </data>
+  <data name="LastLoginDateTime" xml:space="preserve">
+    <value>زمان آخرین ورود</value>
   </data>
   <data name="List" xml:space="preserve">
     <value>فهرست</value>
@@ -171,14 +255,26 @@
   <data name="ListOfItems" xml:space="preserve">
     <value>فهرست {0}</value>
   </data>
+  <data name="MaritalStatus" xml:space="preserve">
+    <value> وضعیت تاهل</value>
+  </data>
+  <data name="MilitaryServiceStatus" xml:space="preserve">
+    <value>وضعیت نظام وظیفه</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>نام</value>
+  </data>
+  <data name="NationalCode" xml:space="preserve">
+    <value> کد ملی</value>
   </data>
   <data name="Ordering" xml:space="preserve">
     <value>چیدمان</value>
   </data>
   <data name="ParentComponentName" xml:space="preserve">
     <value>نام کامپوننت والد</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>گذرواژه</value>
   </data>
   <data name="Process" xml:space="preserve">
     <value>فرایند</value>
@@ -189,11 +285,29 @@
   <data name="ProcessName" xml:space="preserve">
     <value>نام فرایند</value>
   </data>
+  <data name="RegisterIP" xml:space="preserve">
+    <value>آی‌پی کاربر در زمان ثبت‌نام</value>
+  </data>
+  <data name="RegisterType" xml:space="preserve">
+    <value> نوع ثبت‌نام در سامانه</value>
+  </data>
+  <data name="Religion" xml:space="preserve">
+    <value>مذهب</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>نقش کاربر</value>
+  </data>
   <data name="RowNumber" xml:space="preserve">
     <value>ردیف</value>
   </data>
+  <data name="Score" xml:space="preserve">
+    <value>امتیاز</value>
+  </data>
   <data name="SelectAnItem" xml:space="preserve">
     <value>گزینه ای را انتخاب نمایید</value>
+  </data>
+  <data name="TelNumber" xml:space="preserve">
+    <value>شماره تلفن ثابت</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>عنوان</value>
@@ -209,6 +323,9 @@
   </data>
   <data name="UpdateUser" xml:space="preserve">
     <value>کاربر ویرایش کننده</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>شناسه کاربری</value>
   </data>
   <data name="UserTask" xml:space="preserve">
     <value>فرم کموندا</value>

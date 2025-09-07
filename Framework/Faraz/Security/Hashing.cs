@@ -10,6 +10,28 @@ public class Hashing : object
     public Hashing() : base()
     {
     }
+
+    public static string GetSha256(string value)
+    {
+        var inputBytes = System.Text
+            .Encoding.UTF8.GetBytes(s: value);
+
+        //using var sha = System.Security
+        //	.Cryptography.SHA256.Create();
+
+        //var outputBytes =
+        //	sha.ComputeHash(buffer: inputBytes);
+
+        var outputBytes =
+            System.Security.Cryptography
+            .SHA256.HashData(source: inputBytes);
+
+        var result =
+            System.Convert
+            .ToBase64String(inArray: outputBytes);
+
+        return result;
+    }
     // Function to hash a password using Argon2
     public static string HashPassword(string password)
     {

@@ -61,6 +61,33 @@ namespace oc.TSB.Resources.Messages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to شماره تلفن همراه معتبر نمی‌باشد! شماره تلفن همراه باید دقیقا چهارده رقم بوده و باید با دو صفر، نهصد و هشتاد و نه آغاز شده و تمامی ارقام آن انگلیسی باشند..
+        /// </summary>
+        public static string CellPhoneNumber {
+            get {
+                return ResourceManager.GetString("CellPhoneNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نشانی پست الکترونیکی معتبر نمی‌باشد!.
+        /// </summary>
+        public static string EmailAddress {
+            get {
+                return ResourceManager.GetString("EmailAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to شما فقط می‌توانید از کاراکترهای a تا z کوچک یا بزرگ و یا اعداد و یا زیرخط (_) استفاده کرده و طول رشته (متن) نمی‌تواند از یک‌صد حرف تجاوز کند!.
+        /// </summary>
+        public static string KeyName {
+            get {
+                return ResourceManager.GetString("KeyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to طول فیلد {0} می‌تواند حداکثر {1} کاراکتر باشد!.
         /// </summary>
         public static string MaxLength {
@@ -84,15 +111,6 @@ namespace oc.TSB.Resources.Messages {
         public static string NationalCode {
             get {
                 return ResourceManager.GetString("NationalCode", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to شماره تلفن.
-        /// </summary>
-        public static string PhoneNumber {
-            get {
-                return ResourceManager.GetString("PhoneNumber", resourceCulture);
             }
         }
         

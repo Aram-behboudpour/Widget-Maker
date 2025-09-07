@@ -1,6 +1,5 @@
 ﻿using Faraz;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.TeamFoundation.SourceControl.WebApi;
 using oc.TSB.Core.Features.CamundaProcesses;
 using oc.TSB.Infrastructure.Features.Processes.ViewModels;
 using oc.TSB.Infrastructure.Shared;
@@ -21,7 +20,7 @@ public class ProcessRepository :
     #region  GetByPageAsync(int page)
     public
         async
-        System.Threading.Tasks.Task
+        Task
         <BaseSearch.BaseSerachResponse<ProcessResultViewModel>>
 
         GetByPageAsync(int page)
@@ -78,8 +77,9 @@ public class ProcessRepository :
                   RecordCount = recordCount,
               };
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
+            //logger
             var inner = ex.InnerException?.Message;
             throw new Exception($"Outer: {ex.Message}, Inner: {inner}", ex);
         }
@@ -125,166 +125,190 @@ public class ProcessRepository :
     #endregion /GetProcessSelectListAsync()
 
     #region CreateProcessAsync
-    public async System.Threading.Tasks.Task
+    public async Task
       <Process?> CreateProcessAsync(CreateViewModel viewmodel)
     {
-        var foundedItem =
-            await
-            Dbset
-            .Where(current => current.Title == viewmodel.Title.Trim())
-            .Where(current => current.Version == viewmodel.Version)
-            .Where(current => current.IsTestData == false)
-            .FirstOrDefaultAsync();
+        var newEntity = new Process(title:string.Empty,name:string.Empty);
+        try
+        {
+            var foundedItem =
+               await
+               Dbset
+               .Where(current => current.Title == viewmodel.Title.Trim())
+               .Where(current => current.Version == viewmodel.Version)
+               .Where(current => current.IsTestData == false)
+               .FirstOrDefaultAsync();
 
-        if (foundedItem != null)
+            if (foundedItem != null)
+            {
+                return null;
+            }
+
+            newEntity =
+               new Process(title: viewmodel.Title, name: viewmodel.Name)
+               {
+                   //Title = viewmodel.Title,
+                   //Name = viewmodel.Name,
+                   IsActive = true,
+                   Version = viewmodel.Version,
+                   Ordering = viewmodel.Ordering,
+               };
+
+            var entityEntry =
+                await
+                DatabaseContext.AddAsync(entity: newEntity);
+
+            var affectedRows =
+                await
+                DatabaseContext.SaveChangesAsync();
+        }
+        catch (Exception ex)
         {
             return null;
         }
 
-        var newEntity =
-            new Process()
-            {
-                Title = viewmodel.Title,
-                Name = viewmodel.Name,
-                IsActive = true,
-                Version = viewmodel.Version,
-                Ordering = viewmodel.Ordering,
-            };
-
-        var entityEntry =
-            await
-            DatabaseContext.AddAsync(entity: newEntity);
-
-        var affectedRows =
-            await
-            DatabaseContext.SaveChangesAsync();
-        // **************************************************
-
-        // **************************************************    
         return newEntity;
     }
     #endregion /CreateProcessAsync
 
     #region GetDetailsProcessAsync
-    public async System.Threading.Tasks.Task
+    public async Task
             <DetailsOrDeleteViewModel?> GetDetailsProcessAsync(Guid? id)
     {
-        var result =
-            await
-              Dbset
-            .Where(current => current.Id == id.Value)
-            .Select(current => new DetailsOrDeleteViewModel
-            {
-                Id = current.Id,
+        try
+        {
+            var result =
+           await
+             Dbset
+           .Where(current => current.Id == id.Value)
+           .Select(current => new DetailsOrDeleteViewModel
+           {
+               Id = current.Id,
 
-                Title = current.Title,
-                IsActive = current.IsActive,
-                Ordering = current.Ordering,
-                Name = current.Name,
-                Version = current.Version,
-                InsertDateTime = current.InsertDateTime,
-                UpdateDateTime = current.UpdateDateTime,
-            })
-            .FirstOrDefaultAsync();
-        // **************************************************
+               Title = current.Title,
+               IsActive = current.IsActive,
+               Ordering = current.Ordering,
+               Name = current.Name,
+               Version = current.Version,
+               InsertDateTime = current.InsertDateTime,
+               UpdateDateTime = current.UpdateDateTime,
+           })
+           .FirstOrDefaultAsync();
 
-        // **************************************************    
-        return result;
+            return result;
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
     }
     #endregion /GetDetailsProcessAsync
 
     #region DeleteProcessAsync
-
-    public async System.Threading.Tasks.Task
+    public async Task
               <bool> DeleteProcessAsync(Guid? id)
     {
-        var foundedItem =
+        try
+        {
+            var foundedItem =
             await
               Dbset
             .Where(current => current.Id == id.Value)
             .FirstOrDefaultAsync();
 
-        if (foundedItem is null)
+            if (foundedItem is null)
+            {
+                return false;
+            }
+            // **************************************************
+
+            // **************************************************    
+            var entityEntry =
+                DatabaseContext.Remove(entity: foundedItem);
+
+            var affectedRows =
+                await
+                DatabaseContext.SaveChangesAsync();
+            // **************************************************
+
+            // **************************************************
+            return true;
+        }
+        catch (Exception ex)
         {
             return false;
         }
-        // **************************************************
 
-        // **************************************************    
-        var entityEntry =
-            DatabaseContext.Remove(entity: foundedItem);
-
-        var affectedRows =
-            await
-            DatabaseContext.SaveChangesAsync();
-        // **************************************************
-
-        // **************************************************
-        return true;
     }
     #endregion /DeleteProcessAsync
 
     #region UpdateProcessAsync
-
-    public async System.Threading.Tasks.Task
+    public async Task
               <bool> UpdateProcessAsync(UpdateViewModel viewmodel)
     {
-        var foundedItem =
-            await
-              Dbset
-            .Where(current => current.Id == viewmodel.Id)
-            .FirstOrDefaultAsync();
+        try
+        {
+            var foundedItem =
+           await
+             Dbset
+           .Where(current => current.Id == viewmodel.Id)
+           .FirstOrDefaultAsync();
 
-        if (foundedItem is null)
+            if (foundedItem is null)
+            {
+                return false;
+            }
+            // **************************************************
+            //var userId =
+            //AuthenticatedUserService.UserId;
+
+            //if (userId is null)
+            //{
+            //    return RedirectToPage(pageName:
+            //        Constants.CommonRouting.NotFound);
+            //}
+            // **************************************************
+            var title =
+               viewmodel.Title.Fix()!;
+
+            var isTitleFound =
+                await
+                Dbset
+
+                .Where(current => current.Id != viewmodel.Id)
+                .Where(current => current.Title.ToLower() == title.ToLower())
+
+                .AnyAsync();
+
+            if (isTitleFound)
+            {
+                return false;
+
+                //var errorMessage = string.Format
+                //    (Resources.Messages.Errors.AlreadyExists,
+                //    Resources.DataDictionary.Title);
+
+                //AddPageError(message: errorMessage);
+            }
+            // **************************************************
+            foundedItem.SetUpdateDateTime();
+            foundedItem.Title = title;
+            foundedItem.Name = viewmodel.Name;
+            foundedItem.Version = viewmodel.Version;
+            foundedItem.Ordering = viewmodel.Ordering;
+            //foundedItem.UpdateUserId = userId;
+            foundedItem.IsActive = viewmodel.IsActive;
+            // **************************************************
+
+            await DatabaseContext.SaveChangesAsync();
+
+            // **************************************************
+            return true;
+        }
+        catch (Exception ex)
         {
             return false;
         }
-        // **************************************************
-        //var userId =
-        //AuthenticatedUserService.UserId;
-
-        //if (userId is null)
-        //{
-        //    return RedirectToPage(pageName:
-        //        Constants.CommonRouting.NotFound);
-        //}
-        // **************************************************
-        var title =
-           viewmodel.Title.Fix()!;
-
-        var isTitleFound =
-            await
-            Dbset
-
-            .Where(current => current.Id != viewmodel.Id)
-            .Where(current => current.Title.ToLower() == title.ToLower())
-
-            .AnyAsync();
-
-        if (isTitleFound)
-        {
-            return false;
-
-            //var errorMessage = string.Format
-            //    (Resources.Messages.Errors.AlreadyExists,
-            //    Resources.DataDictionary.Title);
-
-            //AddPageError(message: errorMessage);
-        }
-        // **************************************************
-        foundedItem.SetUpdateDateTime();
-        foundedItem.Title = title;
-        foundedItem.Name = viewmodel.Name;
-        foundedItem.Version = viewmodel.Version;
-        foundedItem.Ordering = viewmodel.Ordering;
-        //foundedItem.UpdateUserId = userId;
-        foundedItem.IsActive = viewmodel.IsActive;
-        // **************************************************
-
-        await DatabaseContext.SaveChangesAsync();
-
-        // **************************************************
-        return true;
     }
     #endregion /UpdateProcessAsync
 
@@ -292,29 +316,51 @@ public class ProcessRepository :
     public async Task
               <int> GetLatestVersionProcessAsync(string title)
     {
-        var version =
-            await
-              Dbset
-            .Where(current => current.Title.Trim() == title.Trim())
-            .OrderByDescending(current => current.Version)
-            .Select(current => current.Version)
-            .FirstOrDefaultAsync();
+        try
+        {
+           var version =
+           await
+             Dbset
+           .Where(current => current.Title.Trim().ToLower() == title.Trim().ToLower())
+           .OrderByDescending(current => current.Version)
+           .Select(current => current.Version)
+           .FirstOrDefaultAsync();
 
-        return version;
+            return version;
+        }
+        catch (Exception ex)
+        {
+            return 0;
+        }     
     }
     #endregion /GetLatestVersionProcessAsync
 
     #region GetProcessByIdAsync
     public async Task
-              <Process> GetProcessByIdAsync(Guid id)
+              <Process?> GetProcessByIdAsync(Guid id)
     {
-        var process =
-            await
-              Dbset
-            .Where(current => current.Id == id)
-            .FirstOrDefaultAsync();
+        var process= new Process(title: string.Empty, name: string.Empty);
+        try
+        {
+             process =
+           await
+             Dbset
+           .Where(current => current.Id == id)
+           .FirstOrDefaultAsync();
 
-        return process;
+            if (process is null)
+            {
+                var errorMessage =
+                    $"Process With Id:{id} Not Found!";
+
+                return null;
+            }
+            return process;
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
     }
     #endregion /GetProcessByIdAsync
 }

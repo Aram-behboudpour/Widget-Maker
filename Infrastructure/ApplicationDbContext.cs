@@ -26,6 +26,10 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
 
     #endregion /CamundaProcess
 
+    #region Identity
+    public Microsoft.EntityFrameworkCore.DbSet<Core.Features.Identity.User> Users { get; set; }
+    #endregion /Identity
+
     //**********
     protected override void OnModelCreating
         (Microsoft.EntityFrameworkCore.ModelBuilder modelBuilder)

@@ -15,5 +15,5 @@ public interface IProcessRepository : Faraz.Persistance.IRepository<Process,Guid
     Task<bool> DeleteProcessAsync(Guid? id);
     Task<bool> UpdateProcessAsync(UpdateViewModel viewmodel);
     Task<int> GetLatestVersionProcessAsync(string title);
-    Task<Process> GetProcessByIdAsync(Guid id);
+    Task<Process?> GetProcessByIdAsync(Guid id);
 }

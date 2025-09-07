@@ -1,29 +1,11 @@
-﻿namespace oc.TSB.Core.Features.CamundaProcesses;
+﻿using oc.TSB.Core.Base;
+using System.Collections.Generic;
 
-public class UserTask : CamundaBaseModel
+namespace oc.TSB.Core.Features.CamundaProcesses;
+
+public class UserTask(string title, string name) : ExtendedEntity
 {
-    #region Constructor
-    public UserTask() : base()
-    {
-        Title = string.Empty;
-        Ordering = 10_000;
-
-        Components = new
-            System.Collections.Generic.List<Component>();
-    }
-    #endregion /Constructor
-
     #region Properties
-
-    #region public bool IsActive { get; set; }
-    /// <summary>
-    /// وضعیت فرم
-    /// </summary>
-    [System.ComponentModel.DataAnnotations.Display
-        (ResourceType = typeof(Resources.DataDictionary),
-        Name = nameof(Resources.DataDictionary.IsActive))]
-    public bool IsActive { get; set; }
-    #endregion /public bool IsActive { get; set; }
 
     #region public string Title { get; set; }
     /// <summary>
@@ -38,11 +20,11 @@ public class UserTask : CamundaBaseModel
         ErrorMessageResourceType = typeof(Resources.Messages.Validations),
         ErrorMessageResourceName = nameof(Resources.Messages.Validations.Required))]
 
-    //[System.ComponentModel.DataAnnotations.MaxLength
-    //    (length: Constants.MaxLength.MetaTitle,
-    //    ErrorMessageResourceType = typeof(Resources.Messages.Validations),
-    //    ErrorMessageResourceName = nameof(Resources.Messages.Validations.MaxLength))]
-    public string Title { get; set; }
+    [System.ComponentModel.DataAnnotations.MaxLength
+        (length: Constants.MaxLength.Title,
+        ErrorMessageResourceType = typeof(Resources.Messages.Validations),
+        ErrorMessageResourceName = nameof(Resources.Messages.Validations.MaxLength))]
+    public string Title { get; set; }= title;
     #endregion /public string Title { get; set; }
 
     #region public string Name { get; set; }
@@ -58,22 +40,12 @@ public class UserTask : CamundaBaseModel
         ErrorMessageResourceType = typeof(Resources.Messages.Validations),
         ErrorMessageResourceName = nameof(Resources.Messages.Validations.Required))]
 
-    //[System.ComponentModel.DataAnnotations.MaxLength
-    //    (length: Constants.MaxLength.MetaTitle,
-    //    ErrorMessageResourceType = typeof(Resources.Messages.Validations),
-    //    ErrorMessageResourceName = nameof(Resources.Messages.Validations.MaxLength))]
-    public string Name { get; set; }
+    [System.ComponentModel.DataAnnotations.MaxLength
+        (length: Constants.MaxLength.Name,
+        ErrorMessageResourceType = typeof(Resources.Messages.Validations),
+        ErrorMessageResourceName = nameof(Resources.Messages.Validations.MaxLength))]
+    public string Name { get; set; }= name; 
     #endregion /public string Name { get; set; }
-
-    #region public bool IsTestData { get; set; }
-    /// <summary>
-    /// داده تستی
-    /// </summary>
-    [System.ComponentModel.DataAnnotations.Display
-        (ResourceType = typeof(Resources.DataDictionary),
-        Name = nameof(Resources.DataDictionary.IsTestData))]
-    public bool IsTestData { get; set; }
-    #endregion /public bool IsTestData { get; set; }
 
     #region public Guid ProcessId { get; set; }
     /// <summary>
@@ -106,31 +78,11 @@ public class UserTask : CamundaBaseModel
     public virtual Process? Process { get; set; }
     #endregion /public virtual Process? Process { get; set; }
 
-    #region public int Ordering { get; set; }
-    /// <summary>
-    /// چیدمان
-    /// </summary>
-    [System.ComponentModel.DataAnnotations.Display
-        (ResourceType = typeof(Resources.DataDictionary),
-        Name = nameof(Resources.DataDictionary.Ordering))]
-
-    [System.ComponentModel.DataAnnotations.Required
-        (AllowEmptyStrings = false,
-        ErrorMessageResourceType = typeof(Resources.Messages.Validations),
-        ErrorMessageResourceName = nameof(Resources.Messages.Validations.Required))]
-
-    //[System.ComponentModel.DataAnnotations.Range
-    //    (minimum: 1, maximum: 100_000,
-    //    ErrorMessageResourceType = typeof(Resources.Messages.Validations),
-    //    ErrorMessageResourceName = nameof(Resources.Messages.Validations.Range))]
-    public int Ordering { get; set; }
-    #endregion /public int Ordering { get; set; }
-
     #endregion /Properties
 
     #region Collections
 
-    public virtual System.Collections.Generic.IList<Component> Components { get; private set; }
+    public virtual IList<Component> Components { get; private set; } = new List<Component>();   
 
     #endregion /Collections
 }

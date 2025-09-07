@@ -1,10 +1,12 @@
-﻿namespace oc.TSB.Infrastructure.Features.UserTaskes.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
 
-internal class UserTaskConfiguration: object,
+namespace oc.TSB.Infrastructure.Features.UserTaskes.Configuration;
+
+internal class UserTaskConfiguration : object,
     Microsoft.EntityFrameworkCore.IEntityTypeConfiguration<Core.Features.CamundaProcesses.UserTask>
 {
-    public UserTaskConfiguration():base()
-    {           
+    public UserTaskConfiguration() : base()
+    {
     }
     public void Configure
   (Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder
@@ -19,10 +21,16 @@ internal class UserTaskConfiguration: object,
 
         // **************************************************
         builder
-            .HasKey(current => current.Id)
-            ;
+           .HasKey(current => current.Id)
+           .IsClustered(clustered: false)
+           ;
         // **************************************************
 
+        // **************************************************
+        builder
+           .Property(current => current.Title)
+           .IsUnicode(unicode: false)
+           ;
         // **************************************************
 
         // **************************************************

@@ -1,17 +1,13 @@
 ﻿using Faraz.Domain;
+using System;
 
 namespace oc.TSB.Core.Base;
 
-public abstract class Entity : object,
-    IEntity<System.Guid>
+public abstract class Entity : object, IEntity<Guid>
 {
     #region Constructor
     public Entity() : base()
     {
-        Id = System
-            .Guid.NewGuid();
-
-        InsertDateTime = Faraz.DateTime.Now;
     }
     #endregion /Constructor
 
@@ -21,13 +17,15 @@ public abstract class Entity : object,
     /// <summary>
     /// شناسه
     /// </summary>
+
+    [System.ComponentModel.DataAnnotations.Key]
     [System.ComponentModel.DataAnnotations.Display
         (ResourceType = typeof(Resources.DataDictionary),
         Name = nameof(Resources.DataDictionary.Id))]
 
     [System.ComponentModel.DataAnnotations.Schema.DatabaseGenerated
         (System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)]
-    public System.Guid Id { get; protected set; }
+    public Guid Id { get; protected set; } = Guid.NewGuid();
     #endregion /public System.Guid Id { get; protected set; }
 
     #region public System.DateTimeOffset InsertDateTime { get; private set; }
@@ -40,7 +38,7 @@ public abstract class Entity : object,
 
     [System.ComponentModel.DataAnnotations.Schema.DatabaseGenerated
         (System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)]
-    public System.DateTimeOffset InsertDateTime { get; private set; }
+    public DateTimeOffset InsertDateTime { get; private set; }= DateTimeOffset.Now;
     #endregion /public System.DateTimeOffset InsertDateTime { get; private set; }
 
     #endregion /Properties

@@ -12,6 +12,9 @@ public static class RegularExpression : object
 
     public const string PhoneNumber = @"^@@\d{11}$";
 
+    public const string CellPhoneNumber = @"^00\d{11,12}$"; // برای سایت‌های چند ملیتی
+   //public const string CellPhoneNumber = @"^00\d{12}$"; // برای ایران
+
     public const string Password = @"^[a-zA-Z0-9_!@#$%^&]{8,20}$";
 
     public const string EmailAddress =
@@ -22,4 +25,7 @@ public static class RegularExpression : object
     public const string SpecialCode = @"^\d+$"; //be a number
 
     public const string BranchCode = @"^\d+$";  //be a number
+
+    //public const string AToZDigitsUnderline = @"^[a-zA-Z0-9_]*$";
+    public const string AToZDigitsUnderline = @"^[a-zA-Z][a-zA-Z0-9_]*$";
 }

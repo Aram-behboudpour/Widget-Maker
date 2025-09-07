@@ -132,7 +132,13 @@
   <data name="NationalCode" xml:space="preserve">
     <value>کد ملی</value>
   </data>
-  <data name="PhoneNumber" xml:space="preserve">
-    <value>شماره تلفن</value>
+  <data name="CellPhoneNumber" xml:space="preserve">
+    <value>شماره تلفن همراه معتبر نمی‌باشد! شماره تلفن همراه باید دقیقا چهارده رقم بوده و باید با دو صفر، نهصد و هشتاد و نه آغاز شده و تمامی ارقام آن انگلیسی باشند.</value>
+  </data>
+  <data name="KeyName" xml:space="preserve">
+    <value>شما فقط می‌توانید از کاراکترهای a تا z کوچک یا بزرگ و یا اعداد و یا زیرخط (_) استفاده کرده و طول رشته (متن) نمی‌تواند از یک‌صد حرف تجاوز کند!</value>
+  </data>
+  <data name="EmailAddress" xml:space="preserve">
+    <value>نشانی پست الکترونیکی معتبر نمی‌باشد!</value>
   </data>
 </root>

@@ -61,6 +61,51 @@ namespace oc.TSB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to توضیحات مدیریتی.
+        /// </summary>
+        public static string AdminDescription {
+            get {
+                return ResourceManager.GetString("AdminDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to گوگل.
+        /// </summary>
+        public static string AuthenticationTypeGoogle {
+            get {
+                return ResourceManager.GetString("AuthenticationTypeGoogle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to داخلی.
+        /// </summary>
+        public static string AuthenticationTypepublic {
+            get {
+                return ResourceManager.GetString("AuthenticationTypepublic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to اطلاعات پایه.
+        /// </summary>
+        public static string BaseTable {
+            get {
+                return ResourceManager.GetString("BaseTable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نوع اطلاعات پایه.
+        /// </summary>
+        public static string BaseTableType {
+            get {
+                return ResourceManager.GetString("BaseTableType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Button.
         /// </summary>
         public static string Button {
@@ -75,6 +120,33 @@ namespace oc.TSB.Resources {
         public static string CamundaProssesSettings {
             get {
                 return ResourceManager.GetString("CamundaProssesSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  شماره تلفن همراه.
+        /// </summary>
+        public static string CellPhoneNumber {
+            get {
+                return ResourceManager.GetString("CellPhoneNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to کد تایید شماره تلفن همراه.
+        /// </summary>
+        public static string CellPhoneNumberVerificationKey {
+            get {
+                return ResourceManager.GetString("CellPhoneNumberVerificationKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to کد.
+        /// </summary>
+        public static string Code {
+            get {
+                return ResourceManager.GetString("Code", resourceCulture);
             }
         }
         
@@ -115,6 +187,15 @@ namespace oc.TSB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to نشانی تصویر کاور.
+        /// </summary>
+        public static string CoverImageUrl {
+            get {
+                return ResourceManager.GetString("CoverImageUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to زمان ایجاد.
         /// </summary>
         public static string CreatedAt {
@@ -142,6 +223,15 @@ namespace oc.TSB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to زمان حذف .
+        /// </summary>
+        public static string DeleteDateTime {
+            get {
+                return ResourceManager.GetString("DeleteDateTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to حذف.
         /// </summary>
         public static string DeleteOf {
@@ -151,11 +241,47 @@ namespace oc.TSB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  نشانی پست الکترونیکی.
+        /// </summary>
+        public static string EmailAddress {
+            get {
+                return ResourceManager.GetString("EmailAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to کد تایید نشانی پست‌الکترونیکی.
+        /// </summary>
+        public static string EmailAddressVerificationKey {
+            get {
+                return ResourceManager.GetString("EmailAddressVerificationKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to جنسیت.
+        /// </summary>
+        public static string Gender {
+            get {
+                return ResourceManager.GetString("Gender", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to شناسه.
         /// </summary>
         public static string Id {
             get {
                 return ResourceManager.GetString("Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نشانی تصویر.
+        /// </summary>
+        public static string ImageUrl {
+            get {
+                return ResourceManager.GetString("ImageUrl", resourceCulture);
             }
         }
         
@@ -178,6 +304,69 @@ namespace oc.TSB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to شماره تلفن همراه تایید شده است.
+        /// </summary>
+        public static string IsCellPhoneNumberVerified {
+            get {
+                return ResourceManager.GetString("IsCellPhoneNumberVerified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مشتری حقوقی.
+        /// </summary>
+        public static string IsCompany {
+            get {
+                return ResourceManager.GetString("IsCompany", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to حذف شده.
+        /// </summary>
+        public static string IsDeleted {
+            get {
+                return ResourceManager.GetString("IsDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to پست الکترونیکی تایید شده است.
+        /// </summary>
+        public static string IsEmailAddressVerified {
+            get {
+                return ResourceManager.GetString("IsEmailAddressVerified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  ویژه بودن کاربر.
+        /// </summary>
+        public static string IsFeatured {
+            get {
+                return ResourceManager.GetString("IsFeatured", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to کد ملی تایید شده.
+        /// </summary>
+        public static string IsNationalCodeVerified {
+            get {
+                return ResourceManager.GetString("IsNationalCodeVerified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to پروفایل عمومی است.
+        /// </summary>
+        public static string IsProfilePublic {
+            get {
+                return ResourceManager.GetString("IsProfilePublic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to داده تستی.
         /// </summary>
         public static string IsTestData {
@@ -192,6 +381,69 @@ namespace oc.TSB.Resources {
         public static string IsTrstData {
             get {
                 return ResourceManager.GetString("IsTrstData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  غیر قابل حذف.
+        /// </summary>
+        public static string IsUndeletable {
+            get {
+                return ResourceManager.GetString("IsUndeletable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  تایید شده.
+        /// </summary>
+        public static string IsVerified {
+            get {
+                return ResourceManager.GetString("IsVerified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نمایش در صفحه تماس با ما.
+        /// </summary>
+        public static string IsVisibleInContactUsPage {
+            get {
+                return ResourceManager.GetString("IsVisibleInContactUsPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  نام کلیدی.
+        /// </summary>
+        public static string KeyName {
+            get {
+                return ResourceManager.GetString("KeyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to آخرین زمان تغییر گذرواژه.
+        /// </summary>
+        public static string LastChangePasswordDateTime {
+            get {
+                return ResourceManager.GetString("LastChangePasswordDateTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to آخرین مدرک تحصیلی.
+        /// </summary>
+        public static string LastEducationDegree {
+            get {
+                return ResourceManager.GetString("LastEducationDegree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to زمان آخرین ورود.
+        /// </summary>
+        public static string LastLoginDateTime {
+            get {
+                return ResourceManager.GetString("LastLoginDateTime", resourceCulture);
             }
         }
         
@@ -223,11 +475,38 @@ namespace oc.TSB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  وضعیت تاهل.
+        /// </summary>
+        public static string MaritalStatus {
+            get {
+                return ResourceManager.GetString("MaritalStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to وضعیت نظام وظیفه.
+        /// </summary>
+        public static string MilitaryServiceStatus {
+            get {
+                return ResourceManager.GetString("MilitaryServiceStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to نام.
         /// </summary>
         public static string Name {
             get {
                 return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  کد ملی.
+        /// </summary>
+        public static string NationalCode {
+            get {
+                return ResourceManager.GetString("NationalCode", resourceCulture);
             }
         }
         
@@ -246,6 +525,15 @@ namespace oc.TSB.Resources {
         public static string ParentComponentName {
             get {
                 return ResourceManager.GetString("ParentComponentName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to گذرواژه.
+        /// </summary>
+        public static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
             }
         }
         
@@ -277,6 +565,42 @@ namespace oc.TSB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to آی‌پی کاربر در زمان ثبت‌نام.
+        /// </summary>
+        public static string RegisterIP {
+            get {
+                return ResourceManager.GetString("RegisterIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  نوع ثبت‌نام در سامانه.
+        /// </summary>
+        public static string RegisterType {
+            get {
+                return ResourceManager.GetString("RegisterType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مذهب.
+        /// </summary>
+        public static string Religion {
+            get {
+                return ResourceManager.GetString("Religion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نقش کاربر.
+        /// </summary>
+        public static string Role {
+            get {
+                return ResourceManager.GetString("Role", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ردیف.
         /// </summary>
         public static string RowNumber {
@@ -286,11 +610,29 @@ namespace oc.TSB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to امتیاز.
+        /// </summary>
+        public static string Score {
+            get {
+                return ResourceManager.GetString("Score", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to گزینه ای را انتخاب نمایید.
         /// </summary>
         public static string SelectAnItem {
             get {
                 return ResourceManager.GetString("SelectAnItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to شماره تلفن ثابت.
+        /// </summary>
+        public static string TelNumber {
+            get {
+                return ResourceManager.GetString("TelNumber", resourceCulture);
             }
         }
         
@@ -336,6 +678,15 @@ namespace oc.TSB.Resources {
         public static string UpdateUser {
             get {
                 return ResourceManager.GetString("UpdateUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to شناسه کاربری.
+        /// </summary>
+        public static string Username {
+            get {
+                return ResourceManager.GetString("Username", resourceCulture);
             }
         }
         

@@ -30,10 +30,8 @@ public class CreateTestDataCamundaModel(MediatR.IMediator mediator,
 
         // **************************************************
         var process1 =
-        new oc.TSB.Core.Features.CamundaProcesses.Process
+        new oc.TSB.Core.Features.CamundaProcesses.Process(title: processTitle1, name: processName1)
         {
-            Title = processTitle1,
-            Name = processName1,
             IsActive = true,
             Ordering = 10_000,
             Version = processVersion1,
@@ -53,10 +51,8 @@ public class CreateTestDataCamundaModel(MediatR.IMediator mediator,
 
         // **************************************************
         var process2 =
-        new oc.TSB.Core.Features.CamundaProcesses.Process
+        new oc.TSB.Core.Features.CamundaProcesses.Process(title: processTitle2 , name: processName2)
         {
-            Title = processTitle2,
-            Name = processName2,
             IsActive = true,
             Ordering = 20_000,
             Version = processVersion2,
@@ -76,10 +72,8 @@ public class CreateTestDataCamundaModel(MediatR.IMediator mediator,
 
         // **************************************************
         var process3 =
-       new oc.TSB.Core.Features.CamundaProcesses.Process
+       new oc.TSB.Core.Features.CamundaProcesses.Process(title: processTitle3 , name: processName3)
        {
-           Title = processTitle3,
-           Name = processName3,
            IsActive = true,
            Ordering = 30_000,
            Version = processVersion3,
@@ -96,10 +90,8 @@ public class CreateTestDataCamundaModel(MediatR.IMediator mediator,
         var userTaskName1 = "ثبت اطلاعات انتقال";
 
         var userTask1 =
-                new oc.TSB.Core.Features.CamundaProcesses.UserTask
+                new oc.TSB.Core.Features.CamundaProcesses.UserTask(title: userTaskTitle1 ,name: userTaskName1)
                 {
-                    Title = userTaskTitle1,
-                    Name = userTaskName1,
                     IsActive = true,
                     Ordering = 10_000,
                     ProcessId = process1.Id,
@@ -112,10 +104,8 @@ public class CreateTestDataCamundaModel(MediatR.IMediator mediator,
         var userTaskName2 = "انتخاب کارت";
 
         var userTask2 =
-                new oc.TSB.Core.Features.CamundaProcesses.UserTask
-                {
-                    Title = userTaskTitle2,
-                    Name = userTaskName2,   
+                new oc.TSB.Core.Features.CamundaProcesses.UserTask(title: userTaskTitle2,name: userTaskName2)
+                { 
                     IsActive = true,
                     Ordering = 20_000,
                     ProcessId = process1.Id,
@@ -128,10 +118,8 @@ public class CreateTestDataCamundaModel(MediatR.IMediator mediator,
         var userTaskName3 = "ثبت اطلاعات کارت";
 
         var userTask3 =
-                new oc.TSB.Core.Features.CamundaProcesses.UserTask
+                new oc.TSB.Core.Features.CamundaProcesses.UserTask(title: userTaskTitle3 ,name: userTaskName3)
                 {
-                    Title = userTaskTitle3,
-                    Name = userTaskName3,
                     IsActive = true,
                     Ordering = 30_000,
                     ProcessId = process1.Id,
@@ -144,10 +132,8 @@ public class CreateTestDataCamundaModel(MediatR.IMediator mediator,
         var userTaskName4 = "نتیجه";
 
         var userTask4=
-                new oc.TSB.Core.Features.CamundaProcesses.UserTask
+                new oc.TSB.Core.Features.CamundaProcesses.UserTask(title: userTaskTitle4 ,name: userTaskName4)
                 {
-                    Title = userTaskTitle4,
-                    Name = userTaskName4,
                     IsActive = true,
                     Ordering = 40_000,
                     ProcessId = process1.Id,
@@ -162,10 +148,8 @@ public class CreateTestDataCamundaModel(MediatR.IMediator mediator,
         var userTaskName5 = "خطا";
 
         var userTask5 =
-                new oc.TSB.Core.Features.CamundaProcesses.UserTask
+                new oc.TSB.Core.Features.CamundaProcesses.UserTask(title: userTaskTitle5, name: userTaskName5)
                 {
-                    Title = userTaskTitle5,
-                    Name = userTaskName5,
                     IsActive = true,
                     Ordering = 50_000,
                     ProcessId = process3.Id,
@@ -181,10 +165,8 @@ public class CreateTestDataCamundaModel(MediatR.IMediator mediator,
         var userTaskName6 = "نتیجه";
 
         var userTask6 =
-                new oc.TSB.Core.Features.CamundaProcesses.UserTask
+                new oc.TSB.Core.Features.CamundaProcesses.UserTask(title: userTaskTitle6,name: userTaskName6)
                 {
-                    Title = userTaskTitle6,
-                    Name = userTaskName6,
                     IsActive = true,
                     Ordering = 60_000,
                     ProcessId = process3.Id,
@@ -215,10 +197,9 @@ public class CreateTestDataCamundaModel(MediatR.IMediator mediator,
         var componentName8 = "دکمه Submit";
 
         var component1 =
-            new oc.TSB.Core.Features.CamundaProcesses.Component
+            new oc.TSB.Core.Features.CamundaProcesses.Component(title: componentTitle1,name: componentName1)
             {
-                Title = componentTitle1,
-                Name= componentName1,
+
                 ComponentType = ComponentType.SourcePan,
                 IsActive = true,
                 Ordering = 10_000,
@@ -230,10 +211,8 @@ public class CreateTestDataCamundaModel(MediatR.IMediator mediator,
         await UnitOfWork.Components.InsertAsync(component1);
         // **************************************************
         var component2 =
-            new oc.TSB.Core.Features.CamundaProcesses.Component
+            new oc.TSB.Core.Features.CamundaProcesses.Component(title: componentTitle2, name: componentName2)
             {
-                Title = componentTitle2,
-                Name = componentName2,
                 ComponentType = ComponentType.Amount,
                 IsActive = true,
                 Ordering = 20_000,
@@ -245,10 +224,8 @@ public class CreateTestDataCamundaModel(MediatR.IMediator mediator,
         await UnitOfWork.Components.InsertAsync(component2);
         // **************************************************
         var component3 =
-           new oc.TSB.Core.Features.CamundaProcesses.Component
+           new oc.TSB.Core.Features.CamundaProcesses.Component(title: componentTitle3, name: componentName3)
            {
-               Title = componentTitle3,
-               Name = componentName3,
                ComponentType = ComponentType.DestinationType,
                IsActive = true,
                Ordering = 30_000,
@@ -260,10 +237,8 @@ public class CreateTestDataCamundaModel(MediatR.IMediator mediator,
         await UnitOfWork.Components.InsertAsync(component3);
         // **************************************************
         var component4 =
-           new oc.TSB.Core.Features.CamundaProcesses.Component
+           new oc.TSB.Core.Features.CamundaProcesses.Component(title: componentTitle4, name: componentName4)
            {
-               Title = componentTitle4,
-               Name = componentName4,
                ComponentType = ComponentType.DestinationPan,
                IsActive = true,
                Ordering = 40_000,
@@ -275,10 +250,8 @@ public class CreateTestDataCamundaModel(MediatR.IMediator mediator,
         await UnitOfWork.Components.InsertAsync(component4);
         // **************************************************
         var component5 =
-           new oc.TSB.Core.Features.CamundaProcesses.Component
+           new oc.TSB.Core.Features.CamundaProcesses.Component(title: componentTitle5, name: componentName5)
            {
-               Title = componentTitle5,
-               Name = componentName5,
                ComponentType = ComponentType.MobileNumber,
                IsActive = true,
                Ordering = 50_000,
@@ -290,10 +263,8 @@ public class CreateTestDataCamundaModel(MediatR.IMediator mediator,
         await UnitOfWork.Components.InsertAsync(component5);
         // **************************************************
         var component6 =
-           new oc.TSB.Core.Features.CamundaProcesses.Component
+           new oc.TSB.Core.Features.CamundaProcesses.Component(title: componentTitle6, name: componentName6)
            {
-               Title = componentTitle6,
-               Name = componentName6,
                ComponentType = ComponentType.DestinationMobileNumber,
                IsActive = true,
                Ordering = 60_000,
@@ -306,10 +277,8 @@ public class CreateTestDataCamundaModel(MediatR.IMediator mediator,
         await UnitOfWork.SaveAsync();
         // **************************************************
         var component7 =
-           new oc.TSB.Core.Features.CamundaProcesses.Component
+           new oc.TSB.Core.Features.CamundaProcesses.Component(title: componentTitle7, name: componentName7)
            {
-               Title = componentTitle7,
-               Name = componentName7,
                ComponentType= ComponentType.Space,
                IsActive = true,
                Ordering = 70_000,
@@ -323,10 +292,8 @@ public class CreateTestDataCamundaModel(MediatR.IMediator mediator,
         // **************************************************
         // **************************************************
         var component8 =
-           new oc.TSB.Core.Features.CamundaProcesses.Component
+           new oc.TSB.Core.Features.CamundaProcesses.Component(title: componentTitle8, name: componentName8)
            {
-               Title = componentTitle8,
-               Name = componentName8,
                ComponentType = ComponentType.Button,
                IsActive = true,
                Ordering = 80_000,

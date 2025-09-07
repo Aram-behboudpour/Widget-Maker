@@ -9,17 +9,17 @@ using System.Threading.Tasks;
 namespace oc.TSB.Infrastructure.Features.UserTaskes.Repositories;
 
 public class UserTaskRepository :
-      Faraz.Persistance.Repository<UserTask,Guid>, IUserTaskRepository
+      Faraz.Persistance.Repository<UserTask, Guid>, IUserTaskRepository
 {
     protected internal UserTaskRepository
-       (Microsoft.EntityFrameworkCore.DbContext databaseContext) : base(databaseContext: databaseContext)
+       (DbContext databaseContext) : base(databaseContext: databaseContext)
     {
     }
 
     #region  GetUserTasksByProcessIdAsync(Guid? processId)
     public
         async
-        System.Threading.Tasks.Task
+        Task
          <BaseSearch.BaseSerachResponse<UserTaskResultViewModel>>
 
         GetUserTasksByProcessIdAsync(Guid? processId)
@@ -51,11 +51,11 @@ public class UserTaskRepository :
                 .Select(current => new UserTaskResultViewModel
                 {
                     Id = current.Id,
-                    ProcessId= current.ProcessId,   
+                    ProcessId = current.ProcessId,
                     IsActive = current.IsActive,
                     Title = current.Title,
                     Name = current.Name,
-                    ProcessName = current.Process.Name,
+                    ProcessName = current.Process!.Name,
                     Ordering = current.Ordering,
                     InsertDateTime = current.InsertDateTime,
                     UpdateDateTime = current.UpdateDateTime,
@@ -90,7 +90,7 @@ public class UserTaskRepository :
     #endregion /GetUserTasksByProcessIdAsync(Guid? processId)
 
     #region GetUserTaskSelectListAsync()
-    public async System.Threading.Tasks.Task
+    public async Task
         <Microsoft.AspNetCore.Mvc.Rendering.SelectList> GetUserTaskSelectListAsync
         (object? selectedValue = null)
     {
@@ -129,27 +129,32 @@ public class UserTaskRepository :
 
     #region CreateByProcessIdAsync
     public async Task
-              <UserTask> CreateByProcessIdAsync(string title,string name, Guid processId)
+              <UserTask> CreateByProcessIdAsync(string title, string name, Guid processId)
     {
-        var newEntity =
-            new UserTask()
-            {
-                Title = title,
-                Name = name,
-                IsActive = true,
-                ProcessId = processId,
-            };
+        var newEntity = new UserTask(title: string.Empty, name: string.Empty);
+        try
+        {
+            newEntity =
+          new UserTask(title: title, name: name)
+          {
+              //Title = title,
+              //Name = name,
+              IsActive = true,
+              ProcessId = processId,
+          };
 
-        var entityEntry =
-            await
-            DatabaseContext.AddAsync(entity: newEntity);
+            var entityEntry =
+                await
+                DatabaseContext.AddAsync(entity: newEntity);
 
-        var affectedRows =
-            await
-            DatabaseContext.SaveChangesAsync();
-        // **************************************************
+            var affectedRows =
+                await
+                DatabaseContext.SaveChangesAsync();
+        }
+        catch (Exception)
+        {
+        }
 
-        // **************************************************    
         return newEntity;
     }
     #endregion /CreateByProcessIdAsync
@@ -158,12 +163,18 @@ public class UserTaskRepository :
     public async Task
               <UserTask?> GetUserTaskByIdAsync(Guid id)
     {
-        var userTask =
-            await
-              Dbset
-            .Where(current => current.Id == id)
-            .FirstOrDefaultAsync();
-
+        var userTask = new UserTask(title: string.Empty, name: string.Empty);
+        try
+        {
+            userTask =
+                await
+                Dbset
+                .Where(current => current.Id == id)
+                .FirstOrDefaultAsync();
+        }
+        catch (Exception ex)
+        {
+        }
         return userTask;
     }
     #endregion /GetUserTaskByIdAsync

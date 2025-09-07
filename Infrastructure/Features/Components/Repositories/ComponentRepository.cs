@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using NLog;
 using oc.TSB.Core.Features.CamundaProcesses;
 using oc.TSB.Core.Features.CamundaProcesses.Enums;
 using oc.TSB.Infrastructure.Features.Components.ViewModels;
+using oc.TSB.Infrastructure.Features.Processes.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +20,46 @@ public class ComponentRepository :
     {
     }
 
-    #region  GetComponentsByIdsAsync(Guid? parentComponentId, Guid? userTaskId)
+    #region SampleCodes
+    ///
+    /// ExecuteUpdateAsync()
+    ///
+    //var affectedAllRows =
+    //    await
+    //    Dbset
+    //    .Where(current => current.IsActive == false)
+    //    .ExecuteUpdateAsync(setters => setters.SetProperty(property => property.IsActive, true));
+
+    ///****************************************
+    /// AsNoTracking()
+    ///
+    //var foundedComponent=
+    //    await Dbset
+    //    .AsNoTracking()
+    //    .Where(current => current.Name.ToLower()=="abcd")
+    //    .FirstOrDefaultAsync(); 
+
+    ///****************************************
+    ///Tsql
+    ///
+    //var sql = "DELETE FROM Components WHERE IsActive = 0";
+
+    //var affectedAllRows = DatabaseContext.Database.ExecuteSqlRawAsync(sql);
+
+    ///****************************************
+    /// ExecuteDelete()
+    ///
+    //var affectedAllRows =
+    //       Dbset
+    //       .Where(current => current.IsActive == false)
+    //       .ExecuteDelete();
+    #endregion /SampleCodes
+
+    #region  GetComponentsByIdsAsync(Guid userTaskId)
     public
         async
-        System.Threading.Tasks.Task
-         <BaseSearch.BaseSerachResponse<ComponentResultViewModel>>
+        Task
+        <BaseSearch.BaseSerachResponse<ComponentResultViewModel>>
 
         GetComponentsByIdsAsync(Guid? userTaskId)
     {
@@ -36,30 +74,22 @@ public class ComponentRepository :
         try
         {
             var data =
-              Dbset
-              .AsQueryable();
-
-            if (userTaskId is not null)
-            {
-                data = data.Where(current => current.UserTaskId == userTaskId);
-            }
+          Dbset
+          .AsQueryable();
 
             var recordCount = data.Count();
 
             var List =
                 await
                 data
+                .Where(current => current.UserTaskId == userTaskId)
                 .OrderByDescending(current => current.InsertDateTime)
                 .Select(current => new ComponentResultViewModel
                 {
                     Id = current.Id,
-                    UserTaskId = current.UserTaskId,
-                    ParentComponentId = current.ParentComponentId,
                     IsActive = current.IsActive,
                     Title = current.Title,
                     Name = current.Name,
-                    UserTaskName = current.UserTask!.Name,
-                    ParentComponentName = current.ParentComponent!.Name,
                     Ordering = current.Ordering,
                     InsertDateTime = current.InsertDateTime,
                     UpdateDateTime = current.UpdateDateTime,
@@ -87,28 +117,47 @@ public class ComponentRepository :
         }
         catch (Exception ex)
         {
+            //logger
+            var inner = ex.InnerException?.Message;
+            throw new Exception($"Outer: {ex.Message}, Inner: {inner}", ex);
         }
         return result;
     }
 
-    #endregion /GetComponentsByIdsAsync(Guid? parentComponentId, Guid? userTaskId)
+    #endregion /GetComponentsByIdsAsync(Guid userTaskId)
 
     #region GetByIdsAsync(List<Guid> ids)
-
     public async Task<List<Component>> GetByIdsAsync(List<Guid> ids)
     {
-        return await Dbset.Where(c => ids.Contains(c.Id)).ToListAsync();
+        var list = new List<Component>();
+        try
+        {
+            list =
+               await Dbset
+               .Where(c => ids.Contains(c.Id)).ToListAsync();
+        }
+        catch (Exception ex)
+        {
+        }
+        return list;
     }
 
     #endregion /GetByIdsAsync(List<Guid> ids)
 
     #region GetByIdAsync(Guid id)
-    public async Task<Component> GetByIdAsync(Guid id)
+    public async Task<Component?> GetByIdAsync(Guid id)
     {
-        var component =
-            await
-            Dbset.Where(current => current.Id == id)
-            .FirstOrDefaultAsync();
+        var component = new Component(title:string.Empty,name:string.Empty);
+        try
+        {
+            component =
+               await
+               Dbset.Where(current => current.Id == id)
+               .FirstOrDefaultAsync();
+        }
+        catch (Exception)
+        {
+        }
 
         return component;
     }
@@ -117,21 +166,28 @@ public class ComponentRepository :
     #region GetAllComponentsAsync()
     public async Task<List<ComponentViewModel>> GetAllComponentsAsync()
     {
-        var List =
-               await
-               Dbset
-               .Where(current => current.IsTestData == true)
-               .OrderByDescending(current => current.InsertDateTime)
-               .Select(current => new ComponentViewModel
-               {
-                   ComponentId = current.Id,
-                   ParentComponentId = current.ParentComponentId,
-                   ComponentType = current.ComponentType,
-                   Type = current.ComponentType.ToString(),
+        var List = new List<ComponentViewModel>();
+        try
+        {
+            List =
+             await
+             Dbset
+             .Where(current => current.IsTestData == true)
+             .OrderByDescending(current => current.InsertDateTime)
+             .Select(current => new ComponentViewModel
+             {
+                 ComponentId = current.Id,
+                 ParentComponentId = current.ParentComponentId,
+                 ComponentType = current.ComponentType,
+                 Type = current.ComponentType.ToString(),
 
-               })
-               .ToListAsync()
-               ;
+             })
+             .ToListAsync()
+             ;
+        }
+        catch (Exception ex)
+        {
+        }
 
         return List;
     }
@@ -140,22 +196,34 @@ public class ComponentRepository :
     #region GetComponentDetailsByIdAsync(Guid id)
     public async Task<ComponentDetailsViewModel> GetComponentDetailsByIdAsync(Guid id)
     {
-        var component =
-            await
-            Dbset.FirstOrDefaultAsync(current => current.Id == id);
+        var result = new ComponentDetailsViewModel();
 
-        if (component == null)
+        try
         {
-            return null;
+            var component =
+           await
+           Dbset.FirstOrDefaultAsync(current => current.Id == id);
+
+            if (component is null)
+            {
+                return null;
+            }
+
+            result = new ComponentDetailsViewModel
+            {
+                Id = component.Id,
+                Name = component.Name,
+                Title = component.Title,
+                ParentComponentId = component.ParentComponentId
+            };
+
+        }
+        catch (Exception)
+        {
         }
 
-        return new ComponentDetailsViewModel
-        {
-            Id = component.Id,
-            Name = component.Name,
-            Title = component.Title,
-            ParentComponentId = component.ParentComponentId
-        };
+        return result;
+
     }
     #endregion /GetComponentDetailsByIdAsync(Guid id)
 
@@ -163,7 +231,7 @@ public class ComponentRepository :
     public Task<List<Guid>> GetAllComponentIdsAsync(List<ComponentViewModel> tree)
     {
         var allComponentIds =
-            tree.Select(x => x.ComponentId).ToList();
+               tree.Select(x => x.ComponentId).ToList();
 
         return Task.FromResult(allComponentIds);
     }
@@ -184,15 +252,22 @@ public class ComponentRepository :
     #region GetComponentIdByTypeAsync()
     public async Task<Guid> GetComponentIdByTypeAsync(ComponentType componentType)
     {
-        var ListItem =
-               await
-               Dbset
-               .Where(current => current.ComponentType == componentType)
-               .OrderByDescending(current => current.InsertDateTime)
-               .FirstOrDefaultAsync()
-               ;
+        var data = new Component(title: string.Empty, name: string.Empty);
+        try
+        {
+           data =
+              await
+              Dbset
+              .Where(current => current.ComponentType == componentType)
+              .OrderByDescending(current => current.InsertDateTime)
+              .FirstOrDefaultAsync()
+              ;
+        }
+        catch (Exception)
+        {
+        }  
 
-        return ListItem!.Id;
+        return data!.Id;
     }
 
     #endregion /GetComponentIdByTypeAsync()
@@ -255,15 +330,15 @@ public class ComponentRepository :
                         break;
                 }
 
-                var component = new Component
+                var component = new Component(title:item.Type,name:item.Type)
                 {
                     IsActive = true,
                     IsTestData = false,
-                    Name = item.Type,
-                    Title = item.Type,
+                    //Name = item.Type,
+                    //Title = item.Type,
                     ComponentType = item.ComponentType,
                     UserTaskId = userTaskId,
-                    Ordering= item.Order,
+                    Ordering = item.Order,
                 };
 
                 if (item.ParentComponentId is not null)
@@ -290,6 +365,8 @@ public class ComponentRepository :
         }
         catch (Exception)
         {
+            //Logger.log
+
             return false;
         }
 

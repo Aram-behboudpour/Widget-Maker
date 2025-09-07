@@ -1,4 +1,6 @@
-﻿namespace oc.TSB.Infrastructure.Features.Processes.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace oc.TSB.Infrastructure.Features.Processes.Configuration;
 
 internal class ProcessConfiguration : object,
     Microsoft.EntityFrameworkCore.IEntityTypeConfiguration<Core.Features.CamundaProcesses.Process>
@@ -21,9 +23,15 @@ internal class ProcessConfiguration : object,
         // **************************************************
         builder
             .HasKey(current => current.Id)
+            .IsClustered(clustered:false)
             ;
         // **************************************************
 
+        // **************************************************
+        builder
+           .Property(current => current.Title)
+           .IsUnicode(unicode: false)
+           ;
         // **************************************************
 
         // **************************************************
@@ -45,5 +53,6 @@ internal class ProcessConfiguration : object,
         // **************************************************
         // **************************************************
         // **************************************************
+        //builder.HasData(data: user);
     }
 }

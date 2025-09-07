@@ -1,28 +1,11 @@
-﻿namespace oc.TSB.Core.Features.CamundaProcesses;
+﻿using oc.TSB.Core.Base;
+using System.Collections.Generic;
 
-public class Component : CamundaBaseModel
+namespace oc.TSB.Core.Features.CamundaProcesses;
+
+public class Component(string title, string name) : ExtendedEntity
 {
-    public Component() : base()
-    {
-        Title = string.Empty;
-        Name = string.Empty;
-        Ordering = 10_000;
-
-        Children = new
-          System.Collections.Generic.List<Component>();
-    }
-
     #region Properties
-
-    #region public bool IsActive { get; set; }
-    /// <summary>
-    /// وضعیت کامپوننت
-    /// </summary>
-    [System.ComponentModel.DataAnnotations.Display
-        (ResourceType = typeof(Resources.DataDictionary),
-        Name = nameof(Resources.DataDictionary.IsActive))]
-    public bool IsActive { get; set; }
-    #endregion /public bool IsActive { get; set; }
 
     #region public string Title { get; set; }
     /// <summary>
@@ -37,11 +20,11 @@ public class Component : CamundaBaseModel
         ErrorMessageResourceType = typeof(Resources.Messages.Validations),
         ErrorMessageResourceName = nameof(Resources.Messages.Validations.Required))]
 
-    //[System.ComponentModel.DataAnnotations.MaxLength
-    //    (length: Constants.MaxLength.MetaTitle,
-    //    ErrorMessageResourceType = typeof(Resources.Messages.Validations),
-    //    ErrorMessageResourceName = nameof(Resources.Messages.Validations.MaxLength))]
-    public string Title { get; set; }
+    [System.ComponentModel.DataAnnotations.MaxLength
+        (length: Constants.MaxLength.Title,
+        ErrorMessageResourceType = typeof(Resources.Messages.Validations),
+        ErrorMessageResourceName = nameof(Resources.Messages.Validations.MaxLength))]
+    public string Title { get; set; } = title;
     #endregion /public string Title { get; set; }
 
     #region public string Name { get; set; }
@@ -57,11 +40,11 @@ public class Component : CamundaBaseModel
         ErrorMessageResourceType = typeof(Resources.Messages.Validations),
         ErrorMessageResourceName = nameof(Resources.Messages.Validations.Required))]
 
-    //[System.ComponentModel.DataAnnotations.MaxLength
-    //    (length: Constants.MaxLength.MetaTitle,
-    //    ErrorMessageResourceType = typeof(Resources.Messages.Validations),
-    //    ErrorMessageResourceName = nameof(Resources.Messages.Validations.MaxLength))]
-    public string Name { get; set; }
+    [System.ComponentModel.DataAnnotations.MaxLength
+        (length: Constants.MaxLength.Name,
+        ErrorMessageResourceType = typeof(Resources.Messages.Validations),
+        ErrorMessageResourceName = nameof(Resources.Messages.Validations.MaxLength))]
+    public string Name { get; set; } = name;
     #endregion /public string Name { get; set; }
 
     #region public ComponentType ComponentType { get; set; }
@@ -106,16 +89,6 @@ public class Component : CamundaBaseModel
     public virtual UserTask? UserTask { get; set; }
     #endregion /public virtual UserTask? UserTask { get; set; }
 
-    #region public bool IsTestData { get; set; }
-    /// <summary>
-    /// داده تستی
-    /// </summary>
-    [System.ComponentModel.DataAnnotations.Display
-        (ResourceType = typeof(Resources.DataDictionary),
-        Name = nameof(Resources.DataDictionary.IsTestData))]
-    public bool IsTestData { get; set; }
-    #endregion /public bool IsTestData { get; set; }
-
     #region public Guid? ParentComponentId { get; set; }
     /// <summary>]
     /// کامپوننت والد
@@ -138,22 +111,6 @@ public class Component : CamundaBaseModel
     public virtual Component? ParentComponent { get; set; }
     #endregion /public virtual Component? ParentComponent { get; set; }
 
-
-    #region public int Ordering { get; set; }
-    /// <summary>
-    /// چیدمان
-    /// </summary>
-    [System.ComponentModel.DataAnnotations.Display
-        (ResourceType = typeof(Resources.DataDictionary),
-        Name = nameof(Resources.DataDictionary.Ordering))]
-
-    [System.ComponentModel.DataAnnotations.Required
-        (AllowEmptyStrings = false,
-        ErrorMessageResourceType = typeof(Resources.Messages.Validations),
-        ErrorMessageResourceName = nameof(Resources.Messages.Validations.Required))]
-    public int Ordering { get; set; }
-    #endregion /public int Ordering { get; set; }
-
     #region public string? ComponentImageUrl { get; set; }
     /// <summary>
     /// نشانی فایل
@@ -169,7 +126,7 @@ public class Component : CamundaBaseModel
 
     #region Collections
 
-    public virtual System.Collections.Generic.IList<Component> Children { get; set; }
+    public virtual IList<Component> Children { get; private set; } = new List<Component>();
 
     #endregion /Collections
 }

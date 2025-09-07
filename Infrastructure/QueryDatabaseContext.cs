@@ -22,6 +22,10 @@ public class QueryDatabaseContext : Microsoft.EntityFrameworkCore.DbContext
 
     #endregion /CamundaProcesses
 
+    #region Identity Feature
+    public Microsoft.EntityFrameworkCore.DbSet<Core.Features.Identity.User> Users { get; set; }
+    #endregion /Identity Feature
+
     //**********
     protected override void OnModelCreating
         (Microsoft.EntityFrameworkCore.ModelBuilder modelBuilder)
