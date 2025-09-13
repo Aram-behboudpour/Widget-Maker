@@ -126,7 +126,7 @@ public class Component(string title, string name) : ExtendedEntity
 
     #region Collections
 
-    public virtual IList<Component> Children { get; private set; } = new List<Component>();
+    public virtual IList<Component> Children { get; private set; } = [];
 
     #endregion /Collections
 }

@@ -131,14 +131,14 @@ public class UserTaskRepository :
     public async Task
               <UserTask> CreateByProcessIdAsync(string title, string name, Guid processId)
     {
-        var newEntity = new UserTask(title: string.Empty, name: string.Empty);
+        UserTask newEntity = new (title: string.Empty, name: string.Empty);
         try
         {
             newEntity =
           new UserTask(title: title, name: name)
           {
-              //Title = title,
-              //Name = name,
+              Title = title,
+              Name = name,
               IsActive = true,
               ProcessId = processId,
           };

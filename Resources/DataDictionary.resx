@@ -195,6 +195,9 @@
   <data name="InsertDateTime" xml:space="preserve">
     <value>زمان ایجاد</value>
   </data>
+  <data name="IP" xml:space="preserve">
+    <value>آی‌پی</value>
+  </data>
   <data name="IsActive" xml:space="preserve">
     <value>وضعیت</value>
   </data>
@@ -254,6 +257,12 @@
   </data>
   <data name="ListOfItems" xml:space="preserve">
     <value>فهرست {0}</value>
+  </data>
+  <data name="LoginType" xml:space="preserve">
+    <value>نوع ورود</value>
+  </data>
+  <data name="LogoutDateTime" xml:space="preserve">
+    <value>زمان خروج از سامانه</value>
   </data>
   <data name="MaritalStatus" xml:space="preserve">
     <value> وضعیت تاهل</value>
@@ -323,6 +332,9 @@
   </data>
   <data name="UpdateUser" xml:space="preserve">
     <value>کاربر ویرایش کننده</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>کاربر</value>
   </data>
   <data name="Username" xml:space="preserve">
     <value>شناسه کاربری</value>

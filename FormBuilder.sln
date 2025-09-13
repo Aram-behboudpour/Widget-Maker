@@ -31,6 +31,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "oc.TSB.Infrastructure", "In
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "oc.TSB.Resources", "Resources\oc.TSB.Resources.csproj", "{142AB127-A6F1-046B-7480-CA0946DA1363}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{93D4C332-C7FD-46A9-98B2-FE2D60C486FE}"
+	ProjectSection(SolutionItems) = preProject
+		document.txt = document.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

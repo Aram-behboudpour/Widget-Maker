@@ -79,6 +79,15 @@ namespace oc.TSB.Resources.Messages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; معتبر نمی‌باشد!.
+        /// </summary>
+        public static string IP {
+            get {
+                return ResourceManager.GetString("IP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to شما فقط می‌توانید از کاراکترهای a تا z کوچک یا بزرگ و یا اعداد و یا زیرخط (_) استفاده کرده و طول رشته (متن) نمی‌تواند از یک‌صد حرف تجاوز کند!.
         /// </summary>
         public static string KeyName {

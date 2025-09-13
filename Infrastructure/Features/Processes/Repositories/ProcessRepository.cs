@@ -128,7 +128,7 @@ public class ProcessRepository :
     public async Task
       <Process?> CreateProcessAsync(CreateViewModel viewmodel)
     {
-        var newEntity = new Process(title:string.Empty,name:string.Empty);
+        Process newEntity;
         try
         {
             var foundedItem =
@@ -147,8 +147,6 @@ public class ProcessRepository :
             newEntity =
                new Process(title: viewmodel.Title, name: viewmodel.Name)
                {
-                   //Title = viewmodel.Title,
-                   //Name = viewmodel.Name,
                    IsActive = true,
                    Version = viewmodel.Version,
                    Ordering = viewmodel.Ordering,
@@ -339,7 +337,7 @@ public class ProcessRepository :
     public async Task
               <Process?> GetProcessByIdAsync(Guid id)
     {
-        var process= new Process(title: string.Empty, name: string.Empty);
+        Process? process;
         try
         {
              process =

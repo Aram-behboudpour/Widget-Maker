@@ -1,0 +1,38 @@
+//*************************************************
+Relation 1 to many between Users And Groups
+
+In Users                             
+public virtual IList<Group> Groups { get; private set; } = [];  
+
+In Groups                             
+public virtual IList<User> Users { get; private set; } = []; 
+
+builder
+.HasMany(current => current.Groups)
+.WithMany(other => other.Users)
+.UsingEntity
+(
+  "UsersInGroups",
+  left => left.HasOne(typeof(Group)).WithMany().HasForeignKey("GroupId").HasPrincipalKey(nameof(Group.Id)),
+  right => right.HasOne(typeof(User)).WithMany().HasForeignKey("UserId").HasPrincipalKey(nameof(User.Id)),
+  join => join.HasKey("GroupId","UserId")
+);
+//*************************************************
+Relation 1 to (0-1) between Users And UserProfile
+
+In UserProfile                             
+public Guid UserId { get;  set; }
+public virtual User? User { get;  set; } 
+
+In User                             
+public virtual UserProfile? Profile { get;  set; }  
+
+ builder
+            .HasOne(current => current.Profile)
+            .WithOne(other => other.User)
+            .IsRequired(required: true)
+            .HasForeignKey(other => other.UserId)
+            ;
+//*************************************************
+Implimentation Of Lazy Loading In EF Core
+1.nuget Microsoft.EntityFrameworkCore.Proxies

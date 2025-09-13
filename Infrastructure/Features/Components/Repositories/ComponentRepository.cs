@@ -21,7 +21,7 @@ public class ComponentRepository :
     }
 
     #region SampleCodes
-    ///
+    ///****************************************
     /// ExecuteUpdateAsync()
     ///
     //var affectedAllRows =
@@ -53,6 +53,22 @@ public class ComponentRepository :
     //       Dbset
     //       .Where(current => current.IsActive == false)
     //       .ExecuteDelete();
+    ///****************************************
+    /// ValidationHelper()
+    ///
+    //var component = new Component(title: string.Empty, name: string.Empty);
+
+    //var isValid =
+    //    Faraz.ValidationHelper.IsValid(entity: component);
+
+    //var errors =
+    //    Faraz.ValidationHelper.GetValidationResults(entity: component);
+
+    //    foreach (var error in errors)
+    //    {
+    //        /////
+    //    }
+    ///****************************************
     #endregion /SampleCodes
 
     #region  GetComponentsByIdsAsync(Guid userTaskId)
@@ -147,7 +163,7 @@ public class ComponentRepository :
     #region GetByIdAsync(Guid id)
     public async Task<Component?> GetByIdAsync(Guid id)
     {
-        var component = new Component(title:string.Empty,name:string.Empty);
+        var component = new Component(title: string.Empty, name: string.Empty);
         try
         {
             component =
@@ -255,17 +271,17 @@ public class ComponentRepository :
         var data = new Component(title: string.Empty, name: string.Empty);
         try
         {
-           data =
-              await
-              Dbset
-              .Where(current => current.ComponentType == componentType)
-              .OrderByDescending(current => current.InsertDateTime)
-              .FirstOrDefaultAsync()
-              ;
+            data =
+               await
+               Dbset
+               .Where(current => current.ComponentType == componentType)
+               .OrderByDescending(current => current.InsertDateTime)
+               .FirstOrDefaultAsync()
+               ;
         }
         catch (Exception)
         {
-        }  
+        }
 
         return data!.Id;
     }
@@ -330,12 +346,12 @@ public class ComponentRepository :
                         break;
                 }
 
-                var component = new Component(title:item.Type,name:item.Type)
+                var component = new Component(title: item.Type, name: item.Type)
                 {
                     IsActive = true,
                     IsTestData = false,
-                    //Name = item.Type,
-                    //Title = item.Type,
+                    Name = item.Type,
+                    Title = item.Type,
                     ComponentType = item.ComponentType,
                     UserTaskId = userTaskId,
                     Ordering = item.Order,

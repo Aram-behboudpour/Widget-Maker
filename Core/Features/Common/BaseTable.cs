@@ -31,7 +31,7 @@ public class BaseTable(Enums.BaseTableEnum
     #endregion /Properties
 
     #region Collections
-    public virtual IList<BaseTableItem> BaseTableItems { get; private set; } = new List<BaseTableItem>();
+    public virtual IList<BaseTableItem> BaseTableItems { get; private set; } = [];
 
     #endregion /Collections
 }

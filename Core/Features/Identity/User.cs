@@ -1,6 +1,6 @@
 ﻿using oc.TSB.Core.Base;
-using oc.TSB.Core.Features.Identity.Enums;
 using System;
+using System.Collections.Generic;
 
 namespace oc.TSB.Core.Features.Identity;
 
@@ -266,7 +266,7 @@ public class User(string emailAddress, string registerIP,
         (length: Constants.MaxLength.IP,
         ErrorMessageResourceType = typeof(Resources.Messages.Validations),
         ErrorMessageResourceName = nameof(Resources.Messages.Validations.MaxLength))]
-    public string RegisterIP { get; set; }= registerIP;
+    public string RegisterIP { get; set; } = registerIP;
     #endregion /public string RegisterIP { get; set; }
 
     #region public string EmailAddress { get; set; }
@@ -291,7 +291,7 @@ public class User(string emailAddress, string registerIP,
         (pattern: Constants.RegularExpression.EmailAddress,
         ErrorMessageResourceType = typeof(Resources.Messages.Validations),
         ErrorMessageResourceName = nameof(Resources.Messages.Validations.EmailAddress))]
-    public string EmailAddress { get; set; }= emailAddress;
+    public string EmailAddress { get; set; } = emailAddress;
     #endregion /public string EmailAddress { get; set; }
 
     #region public string? NationalCode { get; set; }
@@ -446,7 +446,7 @@ public class User(string emailAddress, string registerIP,
         (AllowEmptyStrings = false,
         ErrorMessageResourceType = typeof(Resources.Messages.Validations),
         ErrorMessageResourceName = nameof(Resources.Messages.Validations.Required))]
-    public Enums.AuthenticationTypeEnum RegisterType { get; private set; }
+    public Enums.AuthenticationTypeEnum RegisterType { get; private set; } = registerType;
     #endregion /public Enums.AuthenticationTypeEnum RegisterType { get; private set; }
 
     #region public System.DateTimeOffset? LastLoginDateTime { get; set; }
@@ -541,7 +541,7 @@ public class User(string emailAddress, string registerIP,
 
     #region Collections
 
-    //public virtual System.Collections.Generic.IList<LoginLog> LoginLogs { get; private set; }
+    public virtual IList<LoginLog> LoginLogs { get; private set; } = [];
 
     #endregion /Collections
 }

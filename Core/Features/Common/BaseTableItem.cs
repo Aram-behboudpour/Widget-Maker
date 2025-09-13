@@ -78,8 +78,8 @@ public class BaseTableItem(Guid baseTableId,
 
     #region Collections
 
-    public virtual IList<Identity.User> Users_Role { get; private set; } = new List<Identity.User>();
-    public virtual IList<Identity.User> Users_Gender { get; private set; } = new List<Identity.User>();
+    public virtual IList<Identity.User> Users_Role { get; private set; } = [];
+    public virtual IList<Identity.User> Users_Gender { get; private set; } = [];
 
     #endregion /Collections
 }

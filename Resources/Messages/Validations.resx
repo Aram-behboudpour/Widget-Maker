@@ -141,4 +141,7 @@
   <data name="EmailAddress" xml:space="preserve">
     <value>نشانی پست الکترونیکی معتبر نمی‌باشد!</value>
   </data>
+  <data name="IP" xml:space="preserve">
+    <value>'{0}' معتبر نمی‌باشد!</value>
+  </data>
 </root>

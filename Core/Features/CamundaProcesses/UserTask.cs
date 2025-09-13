@@ -82,7 +82,7 @@ public class UserTask(string title, string name) : ExtendedEntity
 
     #region Collections
 
-    public virtual IList<Component> Components { get; private set; } = new List<Component>();   
+    public virtual IList<Component> Components { get; private set; } = [];   
 
     #endregion /Collections
 }

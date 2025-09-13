@@ -28,6 +28,7 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
 
     #region Identity
     public Microsoft.EntityFrameworkCore.DbSet<Core.Features.Identity.User> Users { get; set; }
+    public Microsoft.EntityFrameworkCore.DbSet<Core.Features.Identity.LoginLog> LoginLogs { get; set; }
     #endregion /Identity
 
     //**********

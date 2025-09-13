@@ -75,7 +75,7 @@ public class Process(string title,string name) : ExtendedEntity
 
     #region Collections
 
-    public virtual IList<UserTask> UserTasks { get; private set; } = new List<UserTask>();  
+    public virtual IList<UserTask> UserTasks { get; private set; } = [];  
 
     #endregion /Collections
 }

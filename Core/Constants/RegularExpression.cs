@@ -28,4 +28,7 @@ public static class RegularExpression : object
 
     //public const string AToZDigitsUnderline = @"^[a-zA-Z0-9_]*$";
     public const string AToZDigitsUnderline = @"^[a-zA-Z][a-zA-Z0-9_]*$";
+
+    public const string IP =
+    @"^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
 }

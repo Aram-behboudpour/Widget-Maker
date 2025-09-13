@@ -295,6 +295,15 @@ namespace oc.TSB.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to آی‌پی.
+        /// </summary>
+        public static string IP {
+            get {
+                return ResourceManager.GetString("IP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to وضعیت.
         /// </summary>
         public static string IsActive {
@@ -471,6 +480,24 @@ namespace oc.TSB.Resources {
         public static string ListOfItems {
             get {
                 return ResourceManager.GetString("ListOfItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نوع ورود.
+        /// </summary>
+        public static string LoginType {
+            get {
+                return ResourceManager.GetString("LoginType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to زمان خروج از سامانه.
+        /// </summary>
+        public static string LogoutDateTime {
+            get {
+                return ResourceManager.GetString("LogoutDateTime", resourceCulture);
             }
         }
         
@@ -678,6 +705,15 @@ namespace oc.TSB.Resources {
         public static string UpdateUser {
             get {
                 return ResourceManager.GetString("UpdateUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to کاربر.
+        /// </summary>
+        public static string User {
+            get {
+                return ResourceManager.GetString("User", resourceCulture);
             }
         }
         

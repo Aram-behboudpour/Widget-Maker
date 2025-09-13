@@ -1,5 +1,6 @@
 ﻿using Infrastructure;
 using oc.TSB.Core.Features.CamundaProcesses.Enums;
+using oc.TSB.Infrastructure;
 
 namespace Server.Pages.Test;
 
@@ -23,8 +24,8 @@ public class CreateTestDataCamundaModel(MediatR.IMediator mediator,
         // **************************************************
         // **************************************************
         // **************************************************
-        var processTitle1 = "Main Crad Transfer";
-        var processName1 = " کارت به کارت";
+        var processTitle1 = $"MainCradTransfer";
+        var processName1 = $" کارت به کارت";
         var processVersion1 = 1;
         // **************************************************
 
