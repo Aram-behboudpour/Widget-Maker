@@ -87,8 +87,6 @@ public class LoginLog : ExtendedEntity
     public Enums.AuthenticationTypeEnum LoginType { get; set; }
     #endregion /public Enums.AuthenticationTypeEnum LoginType { get; set; }
 
-
-
     #region public System.DateTimeOffset? LogoutDateTime { get; set; }
     /// <summary>
     /// زمان خروج از سامانه

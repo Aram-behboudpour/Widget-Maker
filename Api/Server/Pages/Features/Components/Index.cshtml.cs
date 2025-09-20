@@ -3,7 +3,7 @@ using Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using oc.TSB.Application.Features.Components.Commands;
 using oc.TSB.Infrastructure.BaseSearch;
-using oc.TSB.Infrastructure.Features.Components.ViewModels;
+using oc.TSB.Infrastructure.Features.CamundaProcesses.Components.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

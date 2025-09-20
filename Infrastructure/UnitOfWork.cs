@@ -1,4 +1,8 @@
-﻿namespace oc.TSB.Infrastructure;
+﻿using oc.TSB.Infrastructure.Features.CamundaProcesses.Components.Repositories;
+using oc.TSB.Infrastructure.Features.CamundaProcesses.Processes.Repositories;
+using oc.TSB.Infrastructure.Features.CamundaProcesses.UserTaskes.Repositories;
+
+namespace oc.TSB.Infrastructure;
 
 public class UnitOfWork :
     Faraz.Persistance.UnitOfWork<ApplicationDbContext>, IUnitOfWork
@@ -26,16 +30,16 @@ public class UnitOfWork :
     }
 
     // **************************************************
-    private Features.Processes.Repositories.IProcessRepository _processes;
+    private IProcessRepository _processes;
 
-    public Features.Processes.Repositories.IProcessRepository Processes
+    public IProcessRepository Processes
     {
         get
         {
             if (_processes == null)
             {
                 _processes =
-                    new Features.Processes.Repositories.ProcessRepository(databaseContext: ApplicationDbContext);
+                    new ProcessRepository(databaseContext: ApplicationDbContext);
             }
 
             return _processes;
@@ -43,16 +47,16 @@ public class UnitOfWork :
     }
 
     // **************************************************
-    private Features.UserTaskes.Repositories.IUserTaskRepository _userTaskes;
+    private IUserTaskRepository _userTaskes;
 
-    public Features.UserTaskes.Repositories.IUserTaskRepository UserTaskes
+    public IUserTaskRepository UserTaskes
     {
         get
         {
             if (_userTaskes == null)
             {
                 _userTaskes =
-                    new Features.UserTaskes.Repositories.UserTaskRepository(databaseContext: ApplicationDbContext);
+                    new UserTaskRepository(databaseContext: ApplicationDbContext);
             }
 
             return _userTaskes;
@@ -60,21 +64,20 @@ public class UnitOfWork :
     }
 
     // **************************************************
-    private Features.Components.Repositories.IComponentRepository _components;
+    private IComponentRepository _components;
 
-    public Features.Components.Repositories.IComponentRepository Components
+    public IComponentRepository Components
     {
         get
         {
             if (_components == null)
             {
                 _components =
-                    new Features.Components.Repositories.ComponentRepository(databaseContext: ApplicationDbContext);
+                    new ComponentRepository(databaseContext: ApplicationDbContext);
             }
 
             return _components;
         }
     }
-
     // **************************************************
 }

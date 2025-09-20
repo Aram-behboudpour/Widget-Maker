@@ -3,7 +3,7 @@ using Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using oc.TSB.Application.Features.Processes.Commands;
 using oc.TSB.Infrastructure.BaseSearch;
-using oc.TSB.Infrastructure.Features.Processes.ViewModels;
+using oc.TSB.Infrastructure.Features.CamundaProcesses.Processes.ViewModels;
 using System.Threading.Tasks;
 
 namespace Server.Pages.Features.Processes;

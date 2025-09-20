@@ -1,5 +1,5 @@
 ﻿using oc.TSB.Application.Features.Components.Commands;
-using oc.TSB.Infrastructure.Features.Processes.ViewModels;
+using oc.TSB.Infrastructure.Features.CamundaProcesses.Processes.ViewModels;
 using System;
 using System.Transactions;
 

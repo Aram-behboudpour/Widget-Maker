@@ -1,6 +1,6 @@
 ﻿using oc.TSB.Application.Features.Components.Commands;
 using oc.TSB.Infrastructure.BaseSearch;
-using oc.TSB.Infrastructure.Features.Components.ViewModels;
+using oc.TSB.Infrastructure.Features.CamundaProcesses.Components.ViewModels;
 
 namespace oc.TSB.Application.Features.Components.CommandsHandler;
 

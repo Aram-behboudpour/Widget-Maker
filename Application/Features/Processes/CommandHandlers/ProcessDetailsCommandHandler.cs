@@ -1,5 +1,5 @@
 ﻿using oc.TSB.Application.Features.Processes.Commands;
-using oc.TSB.Infrastructure.Features.Processes.ViewModels;
+using oc.TSB.Infrastructure.Features.CamundaProcesses.Processes.ViewModels;
 
 namespace oc.TSB.Application.Features.Processes.CommandHandlers;
 

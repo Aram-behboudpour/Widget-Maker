@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using oc.TSB.Application.Features.Components.Commands;
 using oc.TSB.Application.Features.Processes.Commands;
 using oc.TSB.Application.Features.UserTasks.Commands;
-using oc.TSB.Infrastructure.Features.Components.ViewModels;
+using oc.TSB.Infrastructure.Features.CamundaProcesses.Components.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;

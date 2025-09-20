@@ -1,4 +1,6 @@
-﻿namespace oc.TSB.Infrastructure;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace oc.TSB.Infrastructure;
 
 public class QueryDatabaseContext : Microsoft.EntityFrameworkCore.DbContext
 {
@@ -22,14 +24,28 @@ public class QueryDatabaseContext : Microsoft.EntityFrameworkCore.DbContext
 
     #endregion /CamundaProcesses
 
-    #region Identity Feature
-    //public Microsoft.EntityFrameworkCore.DbSet<Core.Features.Identity.User> Users { get; set; }
-    #endregion /Identity Feature
+    #region Identity
+    public Microsoft.EntityFrameworkCore.DbSet<Core.Features.Identity.User> Users { get; set; }
+    public Microsoft.EntityFrameworkCore.DbSet<Core.Features.Identity.LoginLog> LoginLogs { get; set; }
+    #endregion /Identity
+
+    #region Common Feature
+    public Microsoft.EntityFrameworkCore.DbSet<Core.Features.Common.BaseTable> BaseTables { get; set; }
+    public Microsoft.EntityFrameworkCore.DbSet<Core.Features.Common.BaseTableItem> BaseTableItems { get; set; }
+    #endregion /Common Feature
 
     //**********
     protected override void OnModelCreating
         (Microsoft.EntityFrameworkCore.ModelBuilder modelBuilder)
     {
+        //base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfigurationsFromAssembly
+            (assembly: typeof(QueryDatabaseContext).Assembly);
+
+        modelBuilder.Entity<Core.Features.CamundaProcesses.Process>().ToTable("Processes", schema: Core.Features.CamundaProcesses.Schema.Name);
+        modelBuilder.Entity<Core.Features.CamundaProcesses.UserTask>().ToTable("UserTasks", schema: Core.Features.CamundaProcesses.Schema.Name);
+        modelBuilder.Entity<Core.Features.CamundaProcesses.Component>().ToTable("Components", schema: Core.Features.CamundaProcesses.Schema.Name);
+
         base.OnModelCreating(modelBuilder);
     }
 }

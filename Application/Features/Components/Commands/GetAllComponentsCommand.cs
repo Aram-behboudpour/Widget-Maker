@@ -1,4 +1,4 @@
-﻿using oc.TSB.Infrastructure.Features.Components.ViewModels;
+﻿using oc.TSB.Infrastructure.Features.CamundaProcesses.Components.ViewModels;
 using System.Collections.Generic;
 
 namespace oc.TSB.Application.Features.Components.Commands;

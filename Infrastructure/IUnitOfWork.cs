@@ -1,10 +1,14 @@
-﻿namespace oc.TSB.Infrastructure;
+﻿using oc.TSB.Infrastructure.Features.CamundaProcesses.Components.Repositories;
+using oc.TSB.Infrastructure.Features.CamundaProcesses.Processes.Repositories;
+using oc.TSB.Infrastructure.Features.CamundaProcesses.UserTaskes.Repositories;
+
+namespace oc.TSB.Infrastructure;
 
 public interface IUnitOfWork : Faraz.Persistance.IUnitOfWork
 {
     public Features.Logs.Repositories.ILogRepository Logs { get; }
 
-    public Features.Processes.Repositories.IProcessRepository Processes { get; }
-    public Features.UserTaskes.Repositories.IUserTaskRepository UserTaskes { get; }
-    public Features.Components.Repositories.IComponentRepository Components { get; }
+    public IProcessRepository Processes { get; }
+    public IUserTaskRepository UserTaskes { get; }
+    public IComponentRepository Components { get; }
 }
