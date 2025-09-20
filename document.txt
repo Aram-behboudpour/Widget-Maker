@@ -35,4 +35,5 @@ public virtual UserProfile? Profile { get;  set; }
             ;
 //*************************************************
 Implimentation Of Lazy Loading In EF Core
+
 1.nuget Microsoft.EntityFrameworkCore.Proxies
