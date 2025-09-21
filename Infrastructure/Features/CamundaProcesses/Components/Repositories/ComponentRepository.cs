@@ -291,6 +291,8 @@ public class ComponentRepository :
     #region SaveTreeAsync()
     public async Task<bool> SaveTreeAsync(List<ComponentViewModel> tree, Guid userTaskId)
     {
+        var savedComponents = new Dictionary<Guid, Component>();
+
         try
         {
             foreach (var item in tree)
@@ -357,22 +359,21 @@ public class ComponentRepository :
                     Ordering = item.Order,
                 };
 
-                if (item.ParentComponentId is not null)
+                // اگر کامپوننت پدر دارد، از دیکشنری استفاده کن
+                if (item.ParentComponentId.HasValue)
                 {
-                    var ListItem =
-                      await
-                      Dbset
-                      .Where(current => current.ComponentType == item.ComponentType)
-                      .OrderByDescending(current => current.InsertDateTime)
-                      .FirstOrDefaultAsync()
-                      ;
-
-                    component.ParentComponentId = ListItem!.Id;
+                    if (savedComponents.TryGetValue(item.ParentComponentId.Value, out var parent))
+                    {
+                        component.ParentComponentId = parent.Id; 
+                    }
                 }
 
                 var entityEntry =
                     await
                     DatabaseContext.AddAsync(entity: component);
+
+                // ذخیره در دیکشنری برای فرزندان بعدی
+                savedComponents[item.ComponentId] = component;
             }
 
             var affectedRows =

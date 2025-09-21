@@ -1,4 +1,5 @@
 ﻿using oc.TSB.Infrastructure.Features.CamundaProcesses.Components.Repositories;
+using oc.TSB.Infrastructure.Features.CamundaProcesses.ComponentTrees.Repositories;
 using oc.TSB.Infrastructure.Features.CamundaProcesses.Processes.Repositories;
 using oc.TSB.Infrastructure.Features.CamundaProcesses.UserTaskes.Repositories;
 
@@ -11,4 +12,5 @@ public interface IUnitOfWork : Faraz.Persistance.IUnitOfWork
     public IProcessRepository Processes { get; }
     public IUserTaskRepository UserTaskes { get; }
     public IComponentRepository Components { get; }
+    public IComponentTreeRepository ComponentTrees { get; }
 }

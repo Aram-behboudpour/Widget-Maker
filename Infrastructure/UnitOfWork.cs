@@ -1,4 +1,5 @@
 ﻿using oc.TSB.Infrastructure.Features.CamundaProcesses.Components.Repositories;
+using oc.TSB.Infrastructure.Features.CamundaProcesses.ComponentTrees.Repositories;
 using oc.TSB.Infrastructure.Features.CamundaProcesses.Processes.Repositories;
 using oc.TSB.Infrastructure.Features.CamundaProcesses.UserTaskes.Repositories;
 
@@ -77,6 +78,21 @@ public class UnitOfWork :
             }
 
             return _components;
+        }
+    }
+    // **************************************************
+    private IComponentTreeRepository _componentTrees;
+    public IComponentTreeRepository ComponentTrees
+    {
+        get
+        {
+            if (_componentTrees == null)
+            {
+                _componentTrees =
+                    new ComponentTreeRepository(databaseContext: ApplicationDbContext);
+            }
+
+            return _componentTrees;
         }
     }
     // **************************************************

@@ -21,6 +21,7 @@ public class QueryDatabaseContext : Microsoft.EntityFrameworkCore.DbContext
     public Microsoft.EntityFrameworkCore.DbSet<Core.Features.CamundaProcesses.Process> Processes { get; set; }
     public Microsoft.EntityFrameworkCore.DbSet<Core.Features.CamundaProcesses.UserTask> UserTasks { get; set; }
     public Microsoft.EntityFrameworkCore.DbSet<Core.Features.CamundaProcesses.Component> Components { get; set; }
+    public Microsoft.EntityFrameworkCore.DbSet<Core.Features.CamundaProcesses.ComponentTree> ComponentTrees { get; set; }
 
     #endregion /CamundaProcesses
 

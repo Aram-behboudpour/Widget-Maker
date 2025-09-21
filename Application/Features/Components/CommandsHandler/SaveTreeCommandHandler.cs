@@ -14,7 +14,6 @@ public class SaveTreeCommandHandler : object,
     }
     protected Infrastructure.IUnitOfWork UnitOfWork { get; }
 
-
     public
       async
       System.Threading.Tasks.Task
@@ -37,7 +36,7 @@ public class SaveTreeCommandHandler : object,
                     await UnitOfWork.UserTaskes.GetUserTaskByIdAsync(id: request.UserTaskId);
 
                 var version =
-                    await UnitOfWork.Processes.GetLatestVersionProcessAsync(title: process.Title);
+                    await UnitOfWork.Processes.GetLatestVersionProcessAsync(title: process!.Title);
 
                 var createViewModel = new CreateViewModel
                 {
@@ -59,7 +58,11 @@ public class SaveTreeCommandHandler : object,
                 var resultSaveTree =
                  await UnitOfWork.Components.SaveTreeAsync(tree: request.Tree,
                            userTaskId: newUserTask.Id);
+                //*********************************************
+                var treeJson = System.Text.Json.JsonSerializer.Serialize(request.Tree);
 
+                await UnitOfWork.ComponentTrees.SaveTreeJsonAsync(userTaskId: newUserTask.Id, treeJson: treeJson);
+                //*********************************************
                 scope.Complete();
 
                 result.WithSuccess(successMessage: "Success");

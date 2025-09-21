@@ -35,13 +35,24 @@ internal class UserTaskConfiguration : object,
 
         // **************************************************
         builder
-     .HasMany(current => current.Components)
-     .WithOne(other => other.UserTask!)
-      .IsRequired(required: true)
-      .HasForeignKey(other => other.UserTaskId)
-      .OnDelete(deleteBehavior:
-      DeleteBehavior.NoAction)
-     ;
+         .HasMany(current => current.Components)
+         .WithOne(other => other.UserTask!)
+          .IsRequired(required: true)
+          .HasForeignKey(other => other.UserTaskId)
+          .OnDelete(deleteBehavior:
+          DeleteBehavior.NoAction)
+         ;
+        // **************************************************
+
+        // **************************************************
+        builder
+            .HasMany(current => current.ComponentTrees)
+            .WithOne(other => other.UserTask!)
+             .IsRequired(required: true)
+             .HasForeignKey(other => other.UserTaskId)
+             .OnDelete(deleteBehavior:
+             DeleteBehavior.NoAction)
+            ;
         // **************************************************
 
         // **************************************************

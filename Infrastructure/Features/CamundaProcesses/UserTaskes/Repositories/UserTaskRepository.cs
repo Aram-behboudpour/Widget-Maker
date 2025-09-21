@@ -131,7 +131,7 @@ public class UserTaskRepository :
     public async Task
               <UserTask> CreateByProcessIdAsync(string title, string name, Guid processId)
     {
-        UserTask newEntity = new (title: string.Empty, name: string.Empty);
+        UserTask newEntity = new(title: string.Empty, name: string.Empty);
         try
         {
             newEntity =
@@ -171,9 +171,15 @@ public class UserTaskRepository :
                 Dbset
                 .Where(current => current.Id == id)
                 .FirstOrDefaultAsync();
+
+            if (userTask == null)
+            {
+                return null;
+            }
         }
         catch (Exception ex)
         {
+            return null;
         }
         return userTask;
     }

@@ -316,20 +316,20 @@ public class ProcessRepository :
     {
         try
         {
-           var version =
-           await
-             Dbset
-           .Where(current => current.Title.Trim().ToLower() == title.Trim().ToLower())
-           .OrderByDescending(current => current.Version)
-           .Select(current => current.Version)
-           .FirstOrDefaultAsync();
+            var version =
+            await
+              Dbset
+            .Where(current => current.Title.Trim().ToLower() == title.Trim().ToLower())
+            .OrderByDescending(current => current.Version)
+            .Select(current => current.Version)
+            .FirstOrDefaultAsync();
 
             return version;
         }
         catch (Exception ex)
         {
             return 0;
-        }     
+        }
     }
     #endregion /GetLatestVersionProcessAsync
 
@@ -340,11 +340,11 @@ public class ProcessRepository :
         Process? process;
         try
         {
-             process =
-           await
-             Dbset
-           .Where(current => current.Id == id)
-           .FirstOrDefaultAsync();
+            process =
+          await
+            Dbset
+          .Where(current => current.Id == id)
+          .FirstOrDefaultAsync();
 
             if (process is null)
             {
